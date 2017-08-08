@@ -6,11 +6,11 @@ default: &default
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: db/thinknetica_dev.sqlite3
 
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: db/thinknetica_test.sqlite3
 
 ### POSTGRESQL
 default: &default
