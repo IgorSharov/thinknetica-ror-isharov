@@ -1,26 +1,15 @@
-# Offense count: 35
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: native, lf, crlf
 Layout/EndOfLine:
   Enabled: false
 
-# Offense count: 1
 Metrics/AbcSize:
   Max: 25
 
-# Offense count: 21
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 120
 
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'test/test_helper.rb'
-
-# Offense count: 7
 Style/Documentation:
   Enabled: false
