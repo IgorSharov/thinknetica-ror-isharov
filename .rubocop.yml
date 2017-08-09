@@ -13,3 +13,8 @@ Metrics/LineLength:
 
 Style/Documentation:
   Enabled: false
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
+  
