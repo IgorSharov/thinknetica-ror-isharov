@@ -1,18 +1,5 @@
-### SQLITE
-default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-
-development:
-  <<: *default
-  database: db/thinknetica_dev.sqlite3
-
-test:
-  <<: *default
-  database: db/thinknetica_test.sqlite3
-
 ### POSTGRESQL
+
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -25,3 +12,18 @@ development:
 test:
   <<: *default
   database: thinknetica_test
+
+### SQLITE
+
+default: &default
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: db/thinknetica_dev.sqlite3
+
+test:
+  <<: *default
+  database: db/thinknetica_test.sqlite3
