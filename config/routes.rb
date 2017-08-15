@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'questions/index'
+  resources :questions
 
   root to: 'questions#index'
 end
