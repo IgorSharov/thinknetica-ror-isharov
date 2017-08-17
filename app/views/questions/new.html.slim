@@ -1,0 +1,6 @@
+= form_for @question, url: { action: 'create' } do |f|
+  = f.text_field :title
+  br
+  = f.text_field :body
+  br
+  = submit_tag 'Create'

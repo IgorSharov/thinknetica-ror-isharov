@@ -1,0 +1,13 @@
+h1 Questions
+- if Question.count.zero?
+  p No data
+- else
+  - Question.each do |q|
+    .item
+      |#Item
+      br
+      = q.title
+      br
+      = q.body
+
+= button_to 'Ask question', new_question_path, method: :get
