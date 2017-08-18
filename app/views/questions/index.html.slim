@@ -1,11 +1,10 @@
 h1 Questions
-- if Question.count.zero?
+- if @questions.count.zero?
   p No data
 - else
-  - Question.each do |q|
+  - @questions.each do |q|
     .item
-      |#Item
-      br
+      h3 #Question:
       = q.title
       br
       = q.body

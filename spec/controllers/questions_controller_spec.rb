@@ -28,4 +28,30 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to render_template :new
     end
   end
+
+  describe 'GET #create' do
+    context 'with valid attributes' do
+      it 'saves the new question to db' do
+        expect { post :create, params: { question: FactoryGirl.attributes_for(:question) } }.to \
+          change(Question, :count).by(1)
+      end
+
+      it 'redirects to index view' do
+        post :create, params: { question: FactoryGirl.attributes_for(:question) }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'doesn\'t save the new question to db' do
+        expect { post :create, params: { question: FactoryGirl.attributes_for(:invalid_question) } }.not_to \
+          change(Question, :count)
+      end
+
+      it 'renders view for New item' do
+        post :create, params: { question: FactoryGirl.attributes_for(:invalid_question) }
+        expect(response).to render_template :new
+      end
+    end
+  end
 end
