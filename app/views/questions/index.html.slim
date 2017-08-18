@@ -8,5 +8,11 @@ h1 Questions
       = q.title
       br
       = q.body
+      br
+      = link_to "Add answer", question_path(q)
+      - if q.answers.any?
+        '
+        || 
+        = link_to "Answers (#{q.answers.count})", question_path(q)
 
 = button_to 'Ask question', new_question_path, method: :get

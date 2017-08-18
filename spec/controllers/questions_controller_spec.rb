@@ -48,10 +48,24 @@ RSpec.describe QuestionsController, type: :controller do
           change(Question, :count)
       end
 
-      it 'renders view for New item' do
+      it 'renders view for the new question' do
         post :create, params: { question: FactoryGirl.attributes_for(:invalid_question) }
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe 'GET #show' do
+    let(:question) { FactoryGirl.create(:question) }
+
+    before { get :show, params: { id: question } }
+
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'renders show view' do
+      expect(response).to render_template :show
     end
   end
 end
