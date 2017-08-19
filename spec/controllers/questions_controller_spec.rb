@@ -29,27 +29,29 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'GET #create' do
+  describe 'POST #create' do
     context 'with valid attributes' do
+      let(:question_attrs) { FactoryGirl.attributes_for(:question) }
+
       it 'saves the new question to db' do
-        expect { post :create, params: { question: FactoryGirl.attributes_for(:question) } }.to \
-          change(Question, :count).by(1)
+        expect { post :create, params: { question: question_attrs } }.to change(Question, :count).by(1)
       end
 
-      it 'redirects to index view' do
-        post :create, params: { question: FactoryGirl.attributes_for(:question) }
+      it 'redirects to question' do
+        post :create, params: { question: question_attrs }
         expect(response).to redirect_to questions_path
       end
     end
 
     context 'with invalid attributes' do
+      let(:invalid_question_attrs) { FactoryGirl.attributes_for(:invalid_question) }
+
       it 'doesn\'t save the new question to db' do
-        expect { post :create, params: { question: FactoryGirl.attributes_for(:invalid_question) } }.not_to \
-          change(Question, :count)
+        expect { post :create, params: { question: invalid_question_attrs } }.not_to change(Question, :count)
       end
 
       it 'renders view for the new question' do
-        post :create, params: { question: FactoryGirl.attributes_for(:invalid_question) }
+        post :create, params: { question: invalid_question_attrs }
         expect(response).to render_template :new
       end
     end

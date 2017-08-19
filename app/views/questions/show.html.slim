@@ -4,4 +4,7 @@ p = @question.body
 br
 - @question.answers.each do |a|
   .answer
+    h3 #Answer
     = a.body
+= button_to 'Add answer', new_question_answer_path(@question), method: :get
+= link_to "back", root_path
