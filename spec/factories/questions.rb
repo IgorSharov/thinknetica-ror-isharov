@@ -11,6 +11,12 @@ FactoryGirl.define do
   factory :question do
     title
     body
+
+    factory :question_with_answer do
+      after(:create) do |question|
+        create_list(:answer, 3, question: question)
+      end
+    end
   end
 
   factory :invalid_question, class: 'Question' do

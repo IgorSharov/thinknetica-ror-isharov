@@ -9,7 +9,7 @@ h1 Questions
       br
       = q.body
       br
-      = link_to "Add answer", question_path(q)
+      = link_to "Add answer", new_question_answer(q)
       - if q.answers.any?
         '
         || 

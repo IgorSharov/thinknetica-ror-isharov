@@ -56,7 +56,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question) { FactoryGirl.create(:question) }
+    let(:question) { FactoryGirl.create(:question_with_answer) }
 
     before { get :show, params: { id: question } }
 
@@ -66,6 +66,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'renders show view' do
       expect(response).to render_template :show
+    end
+
+    it 'shows a list of all answers for the question' do
+      expect(assigns(:question).answers).to match_array(question.answers)
     end
   end
 end
