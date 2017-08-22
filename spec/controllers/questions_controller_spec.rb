@@ -39,7 +39,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to question' do
         post :create, params: { question: question_attrs }
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to root_path
       end
     end
 

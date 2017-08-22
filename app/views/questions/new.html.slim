@@ -1,7 +1,9 @@
 h1 Ask your question:
 = form_for @question, url: { action: 'create' } do |f|
+  = f.label :title
   = f.text_field :title
   br
+  = f.label :body
   = f.text_area :body
   br
   = submit_tag 'Ask'

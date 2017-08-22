@@ -1,0 +1,45 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.feature 'User can see all questions', '
+  In order to read all questions
+  as a user
+  I want to list all questions
+' do
+  scenario 'User see all questions' do
+    visit questions_path
+
+    expect(page).to have_text('Questions')
+  end
+end
+
+RSpec.feature 'User can create a question', '
+  In order to ask a question
+  as a user
+  I want to create a question in the system
+' do
+  scenario 'User creates a new question' do
+    visit questions_path
+
+    click_button 'Ask question'
+
+    expect(page).to have_text('Ask your question')
+    expect(current_path).to eq new_question_path
+
+    fill_in 'Title', with: 'My title'
+    fill_in 'Body', with: 'My body'
+    click_button 'Ask'
+
+    expect(page).to have_text('Questions')
+    expect(current_path).to eq root_path
+  end
+end
+
+RSpec.feature 'User can answer a question', '
+  In order to answer a question
+  as a user
+  I want to add an answer to the question
+' do
+  scenario 'User answers the question'
+end
