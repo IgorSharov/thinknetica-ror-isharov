@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { FactoryGirl.create(:question_with_answer) }
+  let(:question) { create(:question_with_answer) }
 
   describe 'GET #new' do
     before { get :new, params: { question_id: question } }
@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      let(:answer_attrs) { FactoryGirl.attributes_for(:answer) }
+      let(:answer_attrs) { attributes_for(:answer) }
 
       it 'saves the new answer to db' do
         question
@@ -38,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      let(:invalid_answer_attrs) { FactoryGirl.attributes_for(:invalid_answer) }
+      let(:invalid_answer_attrs) { attributes_for(:invalid_answer) }
 
       it 'doesn\'t save the new question to db' do
         question

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
-    let(:questions) { FactoryGirl.create_list(:question, 2) }
+    let(:questions) { create_list(:question, 2) }
 
     before { get :index }
 
@@ -31,7 +31,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      let(:question_attrs) { FactoryGirl.attributes_for(:question) }
+      let(:question_attrs) { attributes_for(:question) }
 
       it 'saves the new question to db' do
         expect { post :create, params: { question: question_attrs } }.to change(Question, :count).by(1)
@@ -44,7 +44,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      let(:invalid_question_attrs) { FactoryGirl.attributes_for(:invalid_question) }
+      let(:invalid_question_attrs) { attributes_for(:invalid_question) }
 
       it 'doesn\'t save the new question to db' do
         expect { post :create, params: { question: invalid_question_attrs } }.not_to change(Question, :count)
@@ -58,7 +58,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question) { FactoryGirl.create(:question_with_answer) }
+    let(:question) { create(:question_with_answer) }
 
     before { get :show, params: { id: question } }
 
