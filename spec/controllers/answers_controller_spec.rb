@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question_with_answer) }
+  let!(:question) { create(:question_with_answer) }
 
   describe 'GET #new' do
     before { get :new, params: { question_id: question } }
@@ -26,7 +26,6 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer_attrs) { attributes_for(:answer) }
 
       it 'saves the new answer to db' do
-        question
         expect { post :create, params: { question_id: question, answer: answer_attrs } }.to \
           change(question.answers, :count).by(1)
       end
@@ -41,7 +40,6 @@ RSpec.describe AnswersController, type: :controller do
       let(:invalid_answer_attrs) { attributes_for(:invalid_answer) }
 
       it 'doesn\'t save the new question to db' do
-        question
         expect { post :create, params: { question_id: question, answer: invalid_answer_attrs } }.not_to \
           change(Answer, :count)
       end
