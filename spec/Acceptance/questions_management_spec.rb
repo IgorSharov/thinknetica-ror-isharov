@@ -22,24 +22,16 @@ RSpec.feature 'User can create a question', '
   scenario 'User creates a new question' do
     visit questions_path
 
-    click_button 'Ask question'
+    click_on 'Ask question'
 
     expect(page).to have_text('Ask your question')
-    expect(current_path).to eq new_question_path
+    expect(page).to have_current_path(new_question_path)
 
     fill_in 'Title', with: 'My title'
     fill_in 'Body', with: 'My body'
-    click_button 'Ask'
+    click_on 'Ask'
 
     expect(page).to have_text('Questions')
-    expect(current_path).to eq root_path
+    expect(page).to have_current_path(root_path)
   end
-end
-
-RSpec.feature 'User can answer a question', '
-  In order to answer a question
-  as a user
-  I want to add an answer to the question
-' do
-  scenario 'User answers the question'
 end

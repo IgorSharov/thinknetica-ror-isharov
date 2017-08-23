@@ -4,6 +4,7 @@ p = @question.body
 br
 h2 Your answer:
 = form_for @answer, url: { action: 'create' } do |f|
+  = f.label :body
   = f.text_area :body
   br
   = submit_tag 'Answer'
