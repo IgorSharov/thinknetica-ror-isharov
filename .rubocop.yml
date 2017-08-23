@@ -12,7 +12,7 @@ Metrics/BlockLength:
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
-  Max: 120
+  Enabled: false
 
 Style/Documentation:
   Enabled: false

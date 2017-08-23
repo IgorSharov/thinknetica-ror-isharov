@@ -10,7 +10,7 @@ RSpec.feature 'User can see all questions', '
   scenario 'User see all questions' do
     visit questions_path
 
-    expect(page).to have_text('Questions')
+    expect(page).to have_content 'Questions'
   end
 end
 
@@ -24,14 +24,14 @@ RSpec.feature 'User can create a question', '
 
     click_on 'Ask question'
 
-    expect(page).to have_text('Ask your question')
-    expect(page).to have_current_path(new_question_path)
+    expect(page).to have_content 'Ask your question'
+    expect(page).to have_current_path new_question_path
 
     fill_in 'Title', with: 'My title'
     fill_in 'Body', with: 'My body'
     click_on 'Ask'
 
-    expect(page).to have_text('Questions')
-    expect(page).to have_current_path(root_path)
+    expect(page).to have_content 'Questions'
+    expect(page).to have_current_path root_path
   end
 end

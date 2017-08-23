@@ -14,14 +14,14 @@ RSpec.feature 'User can answer a question', '
 
     click_on 'Add answer'
 
-    expect(page).to have_current_path(new_question_answer_path(question))
+    expect(page).to have_current_path new_question_answer_path(question)
 
     answer_text = 'Answer body'
 
     fill_in 'Body', with: answer_text
     click_on 'Answer'
 
-    expect(page).to have_current_path(question_path(question))
-    expect(page).to have_text(answer_text)
+    expect(page).to have_current_path question_path(question)
+    expect(page).to have_content answer_text
   end
 end
