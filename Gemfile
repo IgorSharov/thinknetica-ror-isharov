@@ -12,6 +12,19 @@ ruby '2.3.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
 # Use sqlite3 as the database for Active Record
+
+# WINDOWS ISSUE:
+# I solve it with uninstall all bcrypt gem versions with
+# > gem uninstall bcrypt
+# and select option 3 (if exist) and uninstall all bcrypt-ruby gem versions with
+# > gem uninstall bcrypt-ruby
+# and select option 3 (if exist)
+# then install bcrypt using
+# > gem install bcrypt --platform=ruby
+# then add this line
+# > gem 'bcrypt', platforms: :ruby
+# to Gemfile, that is it :D.
+gem 'bcrypt', platforms: :ruby
 gem 'devise'
 gem 'pg'
 gem 'sqlite3'
