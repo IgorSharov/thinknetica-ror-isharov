@@ -32,6 +32,26 @@ RSpec.feature 'User signs in', '
   end
 end
 
+RSpec.feature 'User signs out', '
+  In order to quit
+  as an authenticated user
+  I want to sign out
+' do
+  scenario 'Authenticated user signs out' do
+    User.create!(email: 'user@test.com', password: '123456')
+
+    visit new_user_session_path
+
+    fill_in 'Email', with: 'user@test.com'
+    fill_in 'Password', with: '123456'
+    click_on 'Log in'
+
+    click_on 'Log out'
+
+    expect(page).to have_content 'Signed out successfully.'
+  end
+end
+
 RSpec.feature 'Unregistered user can sign up', '
   In order to sign up
   as an unregistered user
