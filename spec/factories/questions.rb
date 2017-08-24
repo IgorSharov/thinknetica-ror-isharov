@@ -12,7 +12,7 @@ FactoryGirl.define do
     title
     body
 
-    factory :question_with_answer do
+    factory :question_with_answers do
       after(:create) do |question|
         create_list(:answer, 3, question: question)
       end

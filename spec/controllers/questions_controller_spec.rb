@@ -58,7 +58,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question) { create(:question_with_answer) }
+    let(:question) { create(:question_with_answers) }
 
     before { get :show, params: { id: question } }
 

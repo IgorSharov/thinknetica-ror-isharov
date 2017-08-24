@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let!(:question) { create(:question_with_answer) }
+  let!(:question) { create(:question_with_answers) }
 
   describe 'GET #new' do
     before { get :new, params: { question_id: question } }
