@@ -56,6 +56,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.1)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -112,6 +113,10 @@ GEM
     pg (0.21.0)
     pg (0.21.0-x86-mingw32)
     powerpack (0.1.1)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     public_suffix (2.0.5)
     puma (3.9.1)
     rack (2.0.3)
@@ -202,6 +207,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
+    slop (3.6.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -252,6 +258,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   launchy
   pg
+  pry
   puma (~> 3.7)
   rails (~> 5.1.2)
   rails-controller-testing
