@@ -60,3 +60,13 @@ RSpec.feature 'User can see the question with answers', '
     expect(page.all('.answer').count).to eq question.answers.count
   end
 end
+
+RSpec.feature 'User can remove his question', '
+  In order to remove a question
+  as a user
+  I want to destroy one of my questions
+' do
+  scenario 'User removes his question'
+
+  scenario 'User removes someone else\'s question'
+end

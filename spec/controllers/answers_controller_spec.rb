@@ -30,7 +30,7 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer_attrs) { attributes_for(:answer) }
 
       it 'saves the new answer to db' do
-        expect { post :create, params: { question_id: question, answer: answer_attrs } }.to \
+        expect { post :create, params: { question_id: question, answer: answer_attrs, user_id: @user } }.to \
           change(question.answers, :count).by(1)
       end
 

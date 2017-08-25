@@ -11,6 +11,7 @@ FactoryGirl.define do
   factory :question do
     title
     body
+    user
 
     factory :question_with_answers do
       after(:create) do |question|
@@ -22,5 +23,6 @@ FactoryGirl.define do
   factory :invalid_question, class: 'Question' do
     title nil
     body nil
+    user
   end
 end
