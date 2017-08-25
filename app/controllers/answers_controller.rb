@@ -2,7 +2,7 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[new create]
+  before_action :load_question, only: %i[new create destroy]
 
   def new
     @answer = @question.answers.build
@@ -16,6 +16,12 @@ class AnswersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    @answer.destroy if @answer.user == current_user
+    redirect_to question_path(@question)
   end
 
   private

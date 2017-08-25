@@ -49,6 +49,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to question' do
         post :create, params: { question: question_attrs }
+
         expect(response).to redirect_to root_path
       end
     end
@@ -62,6 +63,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'renders view for the new question' do
         post :create, params: { question: invalid_question_attrs }
+
         expect(response).to render_template :new
       end
     end
@@ -82,6 +84,23 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'shows a list of all answers for the question' do
       expect(assigns(:question).answers).to match_array(question.answers)
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    sign_in_user
+
+    let!(:question) { create(:question_with_answers, user: @user) }
+
+    it 'removes the question with its answer' do
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1).and \
+        change(Answer, :count).by(-question.answers.count)
+    end
+
+    it 'redirects to root' do
+      delete :destroy, params: { id: question }
+
+      expect(response).to redirect_to root_path
     end
   end
 end

@@ -40,7 +40,7 @@ RSpec.feature 'User signs out', '
   end
 end
 
-RSpec.feature 'Unregistered user can sign up', '
+RSpec.feature 'Unregistered user signs up', '
   In order to sign up
   as an unregistered user
   I want to create a new user account

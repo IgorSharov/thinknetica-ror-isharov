@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'User can create a question', '
+RSpec.feature 'User creates a question', '
   In order to ask a question
   as a user
   I want to create a question in the system
@@ -35,7 +35,7 @@ RSpec.feature 'User can create a question', '
   end
 end
 
-RSpec.feature 'User can see all questions', '
+RSpec.feature 'User sees all questions', '
   In order to read all questions
   as a user
   I want to list all questions
@@ -47,7 +47,7 @@ RSpec.feature 'User can see all questions', '
   end
 end
 
-RSpec.feature 'User can see the question with answers', '
+RSpec.feature 'User sees the question with answers', '
   In order to read all answers for the question
   as a user
   I want to list all the answers for the question
@@ -61,12 +61,30 @@ RSpec.feature 'User can see the question with answers', '
   end
 end
 
-RSpec.feature 'User can remove his question', '
-  In order to remove a question
+RSpec.feature 'User removes his question', '
+  In order to delete a question
   as a user
-  I want to destroy one of my questions
+  I want to remove one of my questions
 ' do
-  scenario 'User removes his question'
+  given(:question) { create(:question_with_answers) }
 
-  scenario 'User removes someone else\'s question'
+  scenario 'User removes his question' do
+    sign_in question.user
+
+    visit question_path(question)
+
+    expect(page).to have_css('body>form.button_to>input[type="submit"][value="Delete question"]')
+
+    click_on 'Delete question'
+
+    expect(page).to have_current_path root_path
+  end
+
+  scenario 'User tries to remove someone else\'s question' do
+    sign_in create(:user)
+
+    visit question_path(question)
+
+    expect(page).not_to have_css('body>form.button_to>input[type="submit"][value="Delete question"]')
+  end
 end

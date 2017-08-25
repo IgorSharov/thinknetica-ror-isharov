@@ -2,9 +2,13 @@ h1 #Question:
 h2 = @question.title
 p = @question.body
 br
+= button_to 'Delete question', question_path(@question), method: :delete if @question.user == current_user
 - @question.answers.each do |a|
   .answer
     h3 #Answer
-    = a.body
+    p = a.body
+    - if a.user == current_user
+      br
+      = link_to 'Delete answer', question_answer_path(@question, a), method: :delete
 = button_to 'Add answer', new_question_answer_path(@question), method: :get
-= link_to "back", root_path
+= link_to 'back', root_path
