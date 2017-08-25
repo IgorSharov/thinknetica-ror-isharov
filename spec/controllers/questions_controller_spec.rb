@@ -18,6 +18,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
+
     before { get :new }
 
     it 'creates a new Question object' do
@@ -30,6 +32,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
+
     context 'with valid attributes' do
       let(:question_attrs) { attributes_for(:question) }
 
