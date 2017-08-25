@@ -29,13 +29,20 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
       let(:answer_attrs) { attributes_for(:answer) }
 
+      it 'assigns answer\'s user' do
+        post :create, params: { question_id: question, answer: answer_attrs }
+
+        expect(assigns(:answer).user).to eq @user
+      end
+
       it 'saves the new answer to db' do
-        expect { post :create, params: { question_id: question, answer: answer_attrs, user_id: @user } }.to \
+        expect { post :create, params: { question_id: question, answer: answer_attrs } }.to \
           change(question.answers, :count).by(1)
       end
 
       it 'redirects to question' do
         post :create, params: { question_id: question, answer: answer_attrs }
+
         expect(response).to redirect_to question_path(question)
       end
     end
@@ -50,6 +57,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'renders view for the new question' do
         post :create, params: { question_id: question, answer: invalid_answer_attrs }
+
         expect(response).to render_template :new
       end
     end
