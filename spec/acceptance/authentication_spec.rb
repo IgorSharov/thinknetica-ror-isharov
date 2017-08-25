@@ -8,13 +8,7 @@ RSpec.feature 'User signs in', '
   I want to sign in
 ' do
   scenario 'Registered user try to sign in' do
-    User.create!(email: 'user@test.com', password: '123456')
-
-    visit new_user_session_path
-
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '123456'
-    click_on 'Log in'
+    sign_in create(:user)
 
     expect(page).to have_content 'Signed in successfully.'
     expect(page).to have_current_path root_path
@@ -38,13 +32,7 @@ RSpec.feature 'User signs out', '
   I want to sign out
 ' do
   scenario 'Authenticated user signs out' do
-    User.create!(email: 'user@test.com', password: '123456')
-
-    visit new_user_session_path
-
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '123456'
-    click_on 'Log in'
+    sign_in create(:user)
 
     click_on 'Log out'
 

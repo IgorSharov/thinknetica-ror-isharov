@@ -7,7 +7,9 @@ RSpec.feature 'User can create a question', '
   as a user
   I want to create a question in the system
 ' do
-  scenario 'User creates a new question' do
+  scenario 'Authenticated user creates a new question' do
+    sign_in create(:user)
+
     visit questions_path
 
     click_on 'Ask question'
@@ -21,6 +23,15 @@ RSpec.feature 'User can create a question', '
 
     expect(page).to have_content 'Questions'
     expect(page).to have_current_path root_path
+  end
+
+  scenario 'Non-Authenticated user creates a new question' do
+    visit questions_path
+
+    click_on 'Ask question'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_current_path new_user_session_path
   end
 end
 
