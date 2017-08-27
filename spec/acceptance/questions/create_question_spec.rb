@@ -17,12 +17,33 @@ RSpec.feature 'User creates a question', '
     expect(page).to have_content 'Ask your question'
     expect(page).to have_current_path new_question_path
 
-    fill_in 'Title', with: 'My title'
-    fill_in 'Body', with: 'My body'
+    title_text = 'Test title'
+    body_text = 'Test body'
+
+    fill_in 'Title', with: title_text
+    fill_in 'Body', with: body_text
     click_on 'Ask'
 
-    expect(page).to have_content 'Questions'
+    expect(page).to have_content title_text
+    expect(page).to have_content body_text
     expect(page).to have_current_path root_path
+  end
+
+  scenario 'Authenticated user creates an empty question' do
+    sign_in create(:user)
+
+    visit questions_path
+
+    click_on 'Ask question'
+
+    expect(page).to have_content 'Ask your question'
+    expect(page).to have_current_path new_question_path
+
+    click_on 'Ask'
+
+    expect(page).to have_content 'An error occurred while creating the question!'
+    expect(page).to have_content 'Validation error'
+    expect(page).to have_current_path new_question_path
   end
 
   scenario 'Non-Authenticated user creates a new question' do

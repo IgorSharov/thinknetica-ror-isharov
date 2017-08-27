@@ -16,20 +16,28 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.user = current_user
     if @question.save
+      flash[:notice] = 'Question successfully created.'
       redirect_to root_path
     else
-      render :new
+      flash[:alert] = 'An error occurred while creating the question!'
+      flash[:validation_errors] = @question.errors.messages
+      redirect_to new_question_path
     end
   end
 
-  def show; end
+  def show
+    @answer = Answer.new
+  end
 
   def destroy
-    if @question.user == current_user && @question.destroy
-      redirect_to root_path
-    else
-      render :show
+    if @question.user.id? current_user.id
+      if @question.destroy
+        flash[:notice] = 'Question successfully deleted.'
+      else
+        flash[:alert] = 'An error occurred while deleting the question!'
+      end
     end
+    redirect_to root_path
   end
 
   private

@@ -64,7 +64,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'renders view for the new question' do
         post :create, params: { question: invalid_question_attrs }
 
-        expect(response).to render_template :new
+        expect(response).to redirect_to new_question_path
       end
     end
   end
@@ -90,17 +90,34 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'DELETE #destroy' do
     sign_in_user
 
-    let!(:question) { create(:question_with_answers, user: @user) }
+    context 'done by owner' do
+      let!(:question) { create(:question_with_answers, user: @user) }
 
-    it 'removes the question with its answer' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1).and \
-        change(Answer, :count).by(-question.answers.count)
+      it 'removes the question with its answers' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1).and \
+          change(Answer, :count).by(-question.answers.count)
+      end
+
+      it 'redirects to root' do
+        delete :destroy, params: { id: question }
+
+        expect(response).to redirect_to root_path
+      end
     end
 
-    it 'redirects to root' do
-      delete :destroy, params: { id: question }
+    context 'done by another user' do
+      let!(:question) { create(:question_with_answers, user: create(:user)) }
 
-      expect(response).to redirect_to root_path
+      it 'removes the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(0).and \
+          change(Answer, :count).by(0)
+      end
+
+      it 'redirects to root' do
+        delete :destroy, params: { id: question }
+
+        expect(response).to redirect_to root_path
+      end
     end
   end
 end

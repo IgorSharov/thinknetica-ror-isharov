@@ -1,5 +1,14 @@
-h1 Ask your question:
 = form_for @question, url: { action: 'create' } do |f|
+  h1 Ask your question:
+  - if flash[:validation_errors]&.any?
+    .alert
+      h3 = "Validation #{'error'.pluralize(flash[:validation_errors].count)}:"
+      - flash[:validation_errors].each do |error_key, error_messages|
+        .validation-error
+          p = error_key
+          ul
+            - error_messages.each do |error_message|
+              li = error_message
   = f.label :title
   = f.text_field :title
   br

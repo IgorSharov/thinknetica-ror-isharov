@@ -12,6 +12,10 @@ RSpec.feature 'User sees the question with answers', '
   scenario 'User see the question with all its answers' do
     visit question_path(question)
 
-    expect(page.all('.answer').count).to eq question.answers.count
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+    question.answers.each do |a|
+      expect(page).to have_content a.body
+    end
   end
 end

@@ -7,17 +7,17 @@ RSpec.feature 'User removes his question', '
   as a user
   I want to remove one of my questions
 ' do
-  given(:question) { create(:question_with_answers) }
+  given!(:user) { create(:user) }
+  given!(:question) { create(:question_with_answers, user: user) }
 
   scenario 'User removes his question' do
-    sign_in question.user
+    sign_in user
 
     visit question_path(question)
 
-    expect(page).to have_css('body>form.button_to>input[type="submit"][value="Delete question"]')
-
-    click_on 'Delete question'
-
+    expect { click_on 'Delete question' }.to change(Question, :count).by(-1).and \
+      change(Answer, :count).by(-question.answers.count)
+    expect(page).to have_content('Question successfully deleted.')
     expect(page).to have_current_path root_path
   end
 
@@ -25,7 +25,6 @@ RSpec.feature 'User removes his question', '
     sign_in create(:user)
 
     visit question_path(question)
-
-    expect(page).not_to have_css('body>form.button_to>input[type="submit"][value="Delete question"]')
+    expect(page).not_to have_content('Delete question')
   end
 end

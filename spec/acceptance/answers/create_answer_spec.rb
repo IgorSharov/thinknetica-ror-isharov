@@ -13,17 +13,25 @@ RSpec.feature 'User answers a question', '
     sign_in create(:user)
 
     visit question_path(question)
-    click_on 'Add answer'
-
-    expect(page).to have_current_path new_question_answer_path(question)
 
     answer_text = 'Answer body'
-
     fill_in 'Body', with: answer_text
-    click_on 'Answer'
 
-    expect(page).to have_current_path question_path(question)
+    expect { click_on 'Add answer' }.not_to change(self, :current_path)
+
+    expect(page).to have_content 'Answer successfully created.'
     expect(page).to have_content answer_text
+  end
+
+  scenario 'Authenticated user gives empty answer to the question' do
+    sign_in create(:user)
+
+    visit question_path(question)
+
+    expect { click_on 'Add answer' }.not_to change(self, :current_path)
+
+    expect(page).to have_content 'An error occurred while creating the answer!'
+    expect(page).to have_content 'Validation error'
   end
 
   scenario 'Non-Authenticated user answers the question' do

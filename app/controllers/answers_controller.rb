@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[new create destroy]
-
-  def new
-    @answer = @question.answers.build
-  end
+  before_action :authenticate_user!
+  before_action :load_question, only: %i[create destroy]
 
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     if @answer.save
-      redirect_to question_path(@question)
+      flash[:notice] = 'Answer successfully created.'
     else
-      render :new
+      flash[:alert] = 'An error occurred while creating the answer!'
     end
+    flash[:validation_errors] = @answer.errors.messages
+    redirect_to question_path(@question)
   end
 
   def destroy

@@ -9,9 +9,9 @@ h1 Questions
       br
       = q.body
       br
-      = link_to 'Add answer', new_question_answer_path(q)
+      = link_to 'Show', question_path(q)
       - if q.answers.any?
         '  |
-        = link_to "Answers (#{q.answers.count})", question_path(q)
+        span = "#{pluralize(q.answers.count, 'answer')}"
 
 = button_to 'Ask question', new_question_path, method: :get

@@ -3,12 +3,31 @@ h2 = @question.title
 p = @question.body
 br
 = button_to 'Delete question', question_path(@question), method: :delete if @question.user.id? current_user&.id
-- @question.answers.each do |a|
+
+- @question.answers.each do |answer|
   .answer
     h3 #Answer
-    p = a.body
-    - if a.user == current_user
+    p = answer.body
+    - if answer.user.id? current_user&.id
       br
-      = link_to 'Delete answer', question_answer_path(@question, a), method: :delete
-= button_to 'Add answer', new_question_answer_path(@question), method: :get
+      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+
+= form_for @answer, url: question_answers_path(@question) do |new_answer|
+  h2 Your answer:
+  - if flash[:validation_errors]&.any?
+    .alert
+      h3 = "Validation #{'error'.pluralize(flash[:validation_errors].count)}:"
+      - flash[:validation_errors].each do |error_key, error_messages|
+        .validation-error
+          p = error_key
+          ul
+            - error_messages.each do |error_message|
+              li = error_message
+
+  = new_answer.label :body
+  = new_answer.text_area :body
+  br
+  = submit_tag 'Add answer'
+
+br
 = link_to 'back', root_path
