@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.3.3
+
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: native, lf, crlf
 Layout/EndOfLine:

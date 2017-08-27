@@ -2,7 +2,7 @@ h1 #Question:
 h2 = @question.title
 p = @question.body
 br
-= button_to 'Delete question', question_path(@question), method: :delete if @question.user == current_user
+= button_to 'Delete question', question_path(@question), method: :delete if @question.user.id? current_user&.id
 - @question.answers.each do |a|
   .answer
     h3 #Answer

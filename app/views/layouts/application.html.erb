@@ -9,9 +9,14 @@
 </head>
 
 <body>
-    <span class="author"><%= current_user == nil ? '' : current_user.email %></span>
-    <%= button_to 'Log in', new_user_session_path unless user_signed_in? or controller.controller_name == 'sessions' %>
-    <%= button_to 'Log out', destroy_user_session_path, method: :delete if user_signed_in?  %>
+    <span class="author"><%= current_user&.email %></span>
+    <% if controller.controller_name != 'sessions' %>
+        <% unless user_signed_in? %>
+            <%= button_to 'Log in', new_user_session_path %>
+        <% else %>
+            <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
+        <% end %>
+    <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
