@@ -14,10 +14,19 @@ Metrics/BlockLength:
 Metrics/LineLength:
   Enabled: false
 
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
 Style/NumericLiterals:
   Exclude:
     - 'db/schema.rb'
-  
+
+# Offense count: 2
+Rails/FilePath:
+  Exclude:
+    - 'config/environments/development.rb'
+    - 'spec/rails_helper.rb'
