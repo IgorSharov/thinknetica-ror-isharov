@@ -64,7 +64,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'renders view for the new question' do
         post :create, params: { question: invalid_question_attrs }
 
-        expect(response).to redirect_to new_question_path
+        expect(response).to render_template :new
       end
     end
   end
@@ -91,11 +91,10 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     context 'done by owner' do
-      let!(:question) { create(:question_with_answers, user: @user) }
+      let!(:question) { create(:question, user: @user) }
 
       it 'removes the question with its answers' do
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1).and \
-          change(Answer, :count).by(-question.answers.count)
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
 
       it 'redirects to root' do
@@ -106,11 +105,10 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'done by another user' do
-      let!(:question) { create(:question_with_answers, user: create(:user)) }
+      let!(:question) { create(:question, user: create(:user)) }
 
       it 'removes the question' do
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(0).and \
-          change(Answer, :count).by(0)
+        expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
       end
 
       it 'redirects to root' do

@@ -15,9 +15,11 @@ RSpec.feature 'User removes his question', '
 
     visit question_path(question)
 
-    expect { click_on 'Delete question' }.to change(Question, :count).by(-1).and \
-      change(Answer, :count).by(-question.answers.count)
-    expect(page).to have_content('Question successfully deleted.')
+    click_on 'Delete question'
+
+    expect(page).to have_content 'Question successfully deleted.'
+    expect(page).not_to have_content question.title
+    expect(page).not_to have_content question.body
     expect(page).to have_current_path root_path
   end
 
@@ -25,6 +27,13 @@ RSpec.feature 'User removes his question', '
     sign_in create(:user)
 
     visit question_path(question)
-    expect(page).not_to have_content('Delete question')
+
+    expect(page).not_to have_content 'Delete question'
+  end
+
+  scenario 'Non-Authenticated user tries to remove a question' do
+    visit question_path(question)
+
+    expect(page).not_to have_content 'Delete question'
   end
 end

@@ -16,13 +16,22 @@ RSpec.feature 'User removes his answer', '
 
     visit question_path(question)
 
-    expect { click_on 'Delete answer' }.to change(question.answers, :count).by(-1)
+    click_on 'Delete answer'
+
+    expect(page).to have_content 'Answer successfully deleted.'
+    expect(page).not_to have_content answer.body
     expect(page).to have_current_path question_path(question)
   end
 
   scenario 'User tries to remove someone else\'s answer' do
     sign_in create(:user)
 
+    visit question_path(question)
+
+    expect(page).not_to have_content 'Delete answer'
+  end
+
+  scenario 'Non-Authenticated user tries to remove an answer' do
     visit question_path(question)
 
     expect(page).not_to have_content 'Delete answer'

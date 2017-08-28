@@ -2,28 +2,28 @@ h1 #Question:
 h2 = @question.title
 p = @question.body
 br
-= button_to 'Delete question', question_path(@question), method: :delete if @question.user.id? current_user&.id
+= button_to 'Delete question', question_path(@question), method: :delete if current_user&.author_of? @question
 
 - @question.answers.each do |answer|
+  - next if answer.errors.any?
   .answer
     h3 #Answer
     p = answer.body
-    - if answer.user.id? current_user&.id
+    - if current_user&.author_of? answer
       br
-      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete unless answer.id.nil?
 
 = form_for @answer, url: question_answers_path(@question) do |new_answer|
   h2 Your answer:
-  - if flash[:validation_errors]&.any?
+  - if @answer.errors.any?
     .alert
-      h3 = "Validation #{'error'.pluralize(flash[:validation_errors].count)}:"
-      - flash[:validation_errors].each do |error_key, error_messages|
+      h3 = "Validation #{'error'.pluralize(@answer.errors.count)}:"
+      - @answer.errors.messages.each do |error_key, error_messages|
         .validation-error
           p = error_key
           ul
             - error_messages.each do |error_message|
               li = error_message
-
   = new_answer.label :body
   = new_answer.text_area :body
   br

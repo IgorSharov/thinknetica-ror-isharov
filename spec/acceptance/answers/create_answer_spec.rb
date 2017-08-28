@@ -17,7 +17,7 @@ RSpec.feature 'User answers a question', '
     answer_text = 'Answer body'
     fill_in 'Body', with: answer_text
 
-    expect { click_on 'Add answer' }.not_to change(self, :current_path)
+    click_on 'Add answer'
 
     expect(page).to have_content 'Answer successfully created.'
     expect(page).to have_content answer_text
@@ -28,10 +28,10 @@ RSpec.feature 'User answers a question', '
 
     visit question_path(question)
 
-    expect { click_on 'Add answer' }.not_to change(self, :current_path)
+    click_on 'Add answer'
 
     expect(page).to have_content 'An error occurred while creating the answer!'
-    expect(page).to have_content 'Validation error'
+    expect(page).to have_content 'bodycan\'t be blank'
   end
 
   scenario 'Non-Authenticated user answers the question' do

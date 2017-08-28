@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :questions, dependent: :destroy
 
-  def id?(current_user_id)
-    current_user_id == id
+  def author_of?(object)
+    object.user_id == id
   end
 end

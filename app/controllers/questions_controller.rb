@@ -19,9 +19,8 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Question successfully created.'
       redirect_to root_path
     else
-      flash[:alert] = 'An error occurred while creating the question!'
-      flash[:validation_errors] = @question.errors.messages
-      redirect_to new_question_path
+      flash.now[:alert] = 'An error occurred while creating the question!'
+      render :new
     end
   end
 
@@ -30,7 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if @question.user.id? current_user.id
+    if current_user.author_of? @question
       if @question.destroy
         flash[:notice] = 'Question successfully deleted.'
       else

@@ -9,16 +9,22 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Answer successfully created.'
+      redirect_to question_path(@question)
     else
-      flash[:alert] = 'An error occurred while creating the answer!'
+      flash.now[:alert] = 'An error occurred while creating the answer!'
+      render 'questions/show'
     end
-    flash[:validation_errors] = @answer.errors.messages
-    redirect_to question_path(@question)
   end
 
   def destroy
     @answer = Answer.find(params[:id])
-    @answer.destroy if @answer.user.id? current_user.id
+    if current_user.author_of? @answer
+      if @answer.destroy
+        flash[:notice] = 'Answer successfully deleted.'
+      else
+        flash[:alert] = 'An error occurred while deleting the answer!'
+      end
+    end
     redirect_to question_path(@question)
   end
 

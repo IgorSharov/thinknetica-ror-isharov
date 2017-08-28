@@ -10,4 +10,17 @@ RSpec.describe User do
 
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:questions).dependent(:destroy) }
+
+  describe '#author_of?' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:another_question) { create(:question) }
+
+    it 'checks for owner' do
+      expect(user).to be_author_of question
+    end
+    it 'checks for another user' do
+      expect(user).not_to be_author_of another_question
+    end
+  end
 end
