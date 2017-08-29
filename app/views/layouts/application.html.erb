@@ -11,10 +11,10 @@
 <body>
     <span class="author"><%= current_user&.email %></span>
     <% if controller.controller_name != 'sessions' %>
-        <% unless user_signed_in? %>
-            <%= button_to 'Log in', new_user_session_path %>
-        <% else %>
+        <% if user_signed_in? %>
             <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
+        <% else %>
+            <%= button_to 'Log in', new_user_session_path %>
         <% end %>
     <% end %>
     <p class="notice"><%= notice %></p>

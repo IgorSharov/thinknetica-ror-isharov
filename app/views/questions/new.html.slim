@@ -1,14 +1,6 @@
 = form_for @question, url: { action: 'create' } do |f|
   h1 Ask your question:
-  - if @question.errors.any?
-    .alert
-      h3 = "Validation #{'error'.pluralize(@question.errors.count)}:"
-      - @question.errors.messages.each do |error_key, error_messages|
-        .validation-error
-          p = error_key
-          ul
-            - error_messages.each do |error_message|
-              li = error_message
+  = render "shared/errors", object: @question
   = f.label :title
   = f.text_field :title
   br
