@@ -9,10 +9,8 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Answer successfully created.'
-      redirect_to question_path(@question)
     else
       flash.now[:alert] = 'An error occurred while creating the answer!'
-      render 'questions/show'
     end
   end
 

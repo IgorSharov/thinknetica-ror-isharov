@@ -6,7 +6,7 @@ RSpec.feature 'User answers a question', '
   In order to answer a question
   as a user
   I want to add an answer to the question
-' do
+', js: true do
   given(:question) { create(:question) }
 
   scenario 'Authenticated user answers the question' do
@@ -31,7 +31,7 @@ RSpec.feature 'User answers a question', '
     click_on 'Add answer'
 
     expect(page).to have_content 'An error occurred while creating the answer!'
-    expect(page).to have_content 'bodycan\'t be blank'
+    expect(page).to have_content 'body can\'t be blank'
   end
 
   scenario 'Non-Authenticated user answers the question' do

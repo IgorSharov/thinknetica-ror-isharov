@@ -7,9 +7,10 @@ br
 .answers
   = render @question.answers
 
-= form_for @answer, url: question_answers_path(@question) do |new_answer|
+= form_for [@question, @answer], remote: true do |new_answer|
   h2 Your answer:
-  = render "shared/errors", object: @answer
+  .answer-errors
+    = render "shared/errors", object: @answer
   = new_answer.label :body
   = new_answer.text_area :body
   br

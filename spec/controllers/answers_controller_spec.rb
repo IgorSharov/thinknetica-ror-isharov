@@ -12,20 +12,20 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer_attrs) { attributes_for(:answer) }
 
       it 'assigns answer\'s user' do
-        post :create, params: { question_id: question, answer: answer_attrs }
+        post :create, params: { question_id: question, answer: answer_attrs, format: :js }
 
         expect(assigns(:answer).user).to eq @user
       end
 
       it 'saves the new answer to db' do
-        expect { post :create, params: { question_id: question, answer: answer_attrs } }.to \
+        expect { post :create, params: { question_id: question, answer: answer_attrs, format: :js } }.to \
           change(question.answers, :count).by(1)
       end
 
-      it 'redirects to question' do
-        post :create, params: { question_id: question, answer: answer_attrs }
+      it 'renders question show' do
+        post :create, params: { question_id: question, answer: answer_attrs, format: :js }
 
-        expect(response).to redirect_to question_path(question)
+        expect(response).to render_template :create
       end
     end
 
@@ -33,14 +33,14 @@ RSpec.describe AnswersController, type: :controller do
       let(:invalid_answer_attrs) { attributes_for(:invalid_answer) }
 
       it 'doesn\'t save the new question to db' do
-        expect { post :create, params: { question_id: question, answer: invalid_answer_attrs } }.not_to \
+        expect { post :create, params: { question_id: question, answer: invalid_answer_attrs, format: :js } }.not_to \
           change(Answer, :count)
       end
 
       it 'renders view for the new question' do
-        post :create, params: { question_id: question, answer: invalid_answer_attrs }
+        post :create, params: { question_id: question, answer: invalid_answer_attrs, format: :js }
 
-        expect(response).to render_template 'questions/show'
+        expect(response).to render_template :create
       end
     end
   end
