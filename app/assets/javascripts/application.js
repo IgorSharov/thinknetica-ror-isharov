@@ -14,3 +14,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+/*global $*/
+
+$(document).ajaxError(function(e, xhr) {
+    if (xhr.status == 401) {
+        $('.alert').html(xhr.responseText);
+    }
+});
