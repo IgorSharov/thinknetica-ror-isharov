@@ -1,12 +1,13 @@
+var answer = $('.answer[data-answer-id="<%= @answer.id %>"]');
+
 <% if @answer.errors.present? %>
   $(".alert").html("<%= j flash.now[:alert] %>");
   $(".notice").empty();
-  $('.answer-errors').html('<%= j render "shared/errors", object: @answer %>');
+
+  answer.find('form').replaceWith("<%= j render 'answers/edit', answer: @answer %>");
 <% else %>
   $(".alert").empty();
-  $('.answer-errors').empty();
   $(".notice").html("<%= j flash.now[:notice] %>");
 
-  $('.answers').append('<%= j render @answer %>');
-  $('#new_answer>#answer_body').val('');
+  answer.replaceWith('<%= j render @answer %>');
 <% end %>

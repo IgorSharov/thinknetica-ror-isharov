@@ -1,17 +1,18 @@
-h1 #Question:
-h2 = @question.title
-p = @question.body
-br
-= button_to 'Delete question', question_path(@question), method: :delete if current_user&.author_of? @question
+.question
+  h1 = @question.title
+  p = @question.body
+  - if current_user&.author_of? @question
+    = link_to 'Edit', edit_question_path(@question)
+    = button_to 'Delete question', question_path(@question), method: :delete
 
 .answers
   = render @question.answers
 
 = form_for [@question, @answer], remote: true do |new_answer|
-  h2 Your answer:
   .answer-errors
     = render "shared/errors", object: @answer
-  = new_answer.label :body
+  = new_answer.label :body, 'Your answer:'
+  br
   = new_answer.text_area :body
   br
   = submit_tag 'Add answer'

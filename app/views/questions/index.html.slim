@@ -3,12 +3,11 @@ h1 Questions
   p No data
 - else
   - @questions.each do |q|
-    .item
-      h3 #Question:
-      = q.title
-      br
-      = q.body
-      br
+    .question
+      h3
+        |#
+        = q.title
+      p = q.body
       = link_to 'Show', question_path(q)
       - if q.answers.any?
         '  |

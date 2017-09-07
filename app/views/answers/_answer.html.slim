@@ -1,6 +1,8 @@
 - if answer.persisted?
-  .answer
+  .answer*{'data-answer-id': answer.id}
     h3 #Answer
     p = answer.body
     - if current_user&.author_of? answer
-      = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+      = link_to 'Edit', edit_question_answer_path(@question, answer), remote: true
+      '  |
+      = link_to 'Delete', question_answer_path(@question, answer), method: :delete

@@ -20,7 +20,7 @@
     box-sizing: border-box;
 }
 
-.alert {
+.alert,.errors {
     color: red;
 }
 

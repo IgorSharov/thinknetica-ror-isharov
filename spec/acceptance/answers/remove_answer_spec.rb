@@ -16,7 +16,13 @@ RSpec.feature 'User removes his answer', '
 
     visit question_path(question)
 
-    click_on 'Delete answer'
+    within('.answer:nth-of-type(1)') do
+      expect(page).not_to have_link 'Delete'
+    end
+
+    within('.answer:nth-of-type(4)') do
+      click_on 'Delete'
+    end
 
     expect(page).to have_content 'Answer successfully deleted.'
     expect(page).not_to have_content answer.body
@@ -28,12 +34,12 @@ RSpec.feature 'User removes his answer', '
 
     visit question_path(question)
 
-    expect(page).not_to have_content 'Delete answer'
+    expect(page).not_to have_content 'Delete'
   end
 
   scenario 'Non-Authenticated user tries to remove an answer' do
     visit question_path(question)
 
-    expect(page).not_to have_content 'Delete answer'
+    expect(page).not_to have_content 'Delete'
   end
 end

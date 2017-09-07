@@ -1,5 +1,5 @@
 - if object.errors.any?
-  .alert
+  .errors
     h3 = "Validation #{'error'.pluralize(object.errors.count)}:"
     - object.errors.messages.each do |error_key, error_messages|
       .validation-error

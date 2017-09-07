@@ -15,7 +15,7 @@ RSpec.feature 'User answers a question', '
     visit question_path(question)
 
     answer_text = 'Answer body'
-    fill_in 'Body', with: answer_text
+    fill_in 'Your answer:', with: answer_text
 
     click_on 'Add answer'
 
