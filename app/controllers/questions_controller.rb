@@ -2,7 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show destroy]
+  before_action :load_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
@@ -37,6 +37,15 @@ class QuestionsController < ApplicationController
       end
     end
     redirect_to root_path
+  end
+
+  def update
+    return unless current_user.author_of? @question
+    if @question.update(question_params)
+      flash[:notice] = 'Question successfully updated.'
+    else
+      flash[:alert] = 'An error occurred while updating the question!'
+    end
   end
 
   private

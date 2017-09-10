@@ -1,5 +1,5 @@
 = form_for [@question, answer], remote: true do |f|
-  .answer-errors
+  .new-answer-errors
     = render "shared/errors", object: answer
   = f.label :body, 'Edit your answer:'
   br

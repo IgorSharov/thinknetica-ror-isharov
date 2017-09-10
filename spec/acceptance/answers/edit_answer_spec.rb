@@ -22,6 +22,7 @@ RSpec.feature 'User edits his answer', '
       click_on 'Edit'
       fill_in 'Edit your answer:', with: edited_body
       click_on 'Ok'
+
       expect(page).to have_content edited_body
     end
 
@@ -35,12 +36,16 @@ RSpec.feature 'User edits his answer', '
 
     visit question_path(question)
 
-    expect(page).not_to have_selector '.answer>textarea'
+    within('.answer') do
+      expect(page).not_to have_link 'Edit'
+    end
   end
 
   scenario 'Non-Authenticated user can\'t edit any answer' do
     visit question_path(question)
 
-    expect(page).not_to have_selector '.answer>textarea'
+    within('.answer') do
+      expect(page).not_to have_link 'Edit'
+    end
   end
 end

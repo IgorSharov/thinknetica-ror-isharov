@@ -1,0 +1,15 @@
+<% if @question.errors.present? %>
+  $(".alert").html("<%= j flash.now[:alert] %>");
+  $(".notice").empty();
+
+  $('.new-question-errors').html("<%= j render 'shared/errors', object: @question %>");
+<% else %>
+  $(".alert").empty();
+  $(".notice").html("<%= j flash.now[:notice] %>");
+
+  $('.question-actions-bar').show()
+  $('.edit_question').hide()
+
+  $('.question>h1').html('<%= @question.title %>')
+  $('.question>p').html('<%= @question.body %>')
+<% end %>

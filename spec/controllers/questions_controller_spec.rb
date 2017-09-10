@@ -107,7 +107,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'done by another user' do
       let!(:question) { create(:question, user: create(:user)) }
 
-      it 'removes the question' do
+      it 'doesn\'t remove the question' do
         expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
       end
 
@@ -115,6 +115,87 @@ RSpec.describe QuestionsController, type: :controller do
         delete :destroy, params: { id: question }
 
         expect(response).to redirect_to root_path
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    sign_in_user
+    let(:new_question_attrs) { attributes_for(:question) }
+
+    context 'done by owner' do
+      let!(:question) { create(:question, user: @user) }
+
+      context 'with valid attributes' do
+        it 'assigns question\'s user' do
+          patch :update, params: { id: question, question: new_question_attrs, format: :js }
+
+          expect(assigns(:question)).to eq question
+          expect(assigns(:question).user).to eq @user
+        end
+
+        it 'edits question in db' do
+          patch :update, params: { id: question, question: { title: 'new title', body: 'new body' }, format: :js }
+
+          question.reload
+
+          expect(question.title).to eq 'new title'
+          expect(question.body).to eq 'new body'
+        end
+
+        it 'renders question update' do
+          patch :update, params: { id: question, question: new_question_attrs, format: :js }
+
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        let(:invalid_question_attrs) { attributes_for(:invalid_question) }
+
+        it 'doesn\'t change the question in db' do
+          initial_title = question.title
+          initial_body = question.body
+          initial_user = question.user
+
+          patch :update, params: { id: question, question: invalid_question_attrs, format: :js }
+
+          question.reload
+
+          expect(question.title).to eq initial_title
+          expect(question.body).to eq initial_body
+          expect(question.user).to eq initial_user
+        end
+
+        it 'renders question update' do
+          patch :update, params: { id: question, question: invalid_question_attrs, format: :js }
+
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context 'done by another user' do
+      let!(:question) { create(:question, user: create(:user)) }
+
+      it 'doesn\'t save the new question to db' do
+        initial_title = question.title
+        initial_body = question.body
+        initial_user = question.user
+
+        patch :update, params: { id: question, question: new_question_attrs, format: :js }
+
+        question.reload
+
+        expect(question.title).to eq initial_title
+        expect(question.body).to eq initial_body
+        expect(question.user).to eq initial_user
+      end
+
+      it 'renders answer update' do
+        patch :update, params: { id: question, question: new_question_attrs, format: :js }
+
+        expect(response).to render_template :update
       end
     end
   end

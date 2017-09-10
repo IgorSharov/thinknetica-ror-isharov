@@ -115,7 +115,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'with invalid attributes' do
         let(:invalid_answer_attrs) { attributes_for(:invalid_answer) }
 
-        it 'doesn\'t change the question in db' do
+        it 'doesn\'t change the answer in db' do
           initial_body = answer.body
           initial_question = answer.question
           initial_user = answer.user

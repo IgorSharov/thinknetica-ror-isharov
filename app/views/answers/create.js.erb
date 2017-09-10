@@ -1,10 +1,10 @@
 <% if @answer.errors.present? %>
   $(".alert").html("<%= j flash.now[:alert] %>");
   $(".notice").empty();
-  $('.answer-errors').html('<%= j render "shared/errors", object: @answer %>');
+  $('.new-answer-errors').html('<%= j render "shared/errors", object: @answer %>');
 <% else %>
   $(".alert").empty();
-  $('.answer-errors').empty();
+  $('.new-answer-errors').empty();
   $(".notice").html("<%= j flash.now[:notice] %>");
 
   $('.answers').append('<%= j render @answer %>');
