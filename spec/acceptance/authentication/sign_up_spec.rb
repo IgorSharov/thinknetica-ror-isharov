@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 RSpec.feature 'Unregistered user signs up', '
   In order to sign up

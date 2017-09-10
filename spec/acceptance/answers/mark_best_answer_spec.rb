@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 RSpec.feature 'Author of a question marks an answer as the best one', '
   In order to set an answer as the best one

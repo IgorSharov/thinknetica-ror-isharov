@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 RSpec.feature 'User edits his question', '
   In order to clarify my question
