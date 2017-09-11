@@ -1,8 +1,10 @@
 - if answer.persisted?
-  .answer*{'data-answer-id': answer.id}
+  .answer*{'data-answer-id': answer.id} style=('display: none' if answer.best_answer?)
     h3 #Answer
+    - if current_user&.author_of? @question
+      = link_to 'Mark', best_answer_question_answer_path(@question, answer, bool: true), class: 'answer_mark-as-best', method: :patch, remote: true 
     p = answer.body
     - if current_user&.author_of? answer
-      = link_to 'Edit', edit_question_answer_path(@question, answer), remote: true
+      = link_to 'Edit', '#', class: 'answer_edit'
       '  |
-      = link_to 'Delete', question_answer_path(@question, answer), method: :delete
+      = link_to 'Delete', question_answer_path(@question, answer), class: 'answer_delete', method: :delete, remote: true

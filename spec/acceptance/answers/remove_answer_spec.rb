@@ -6,7 +6,7 @@ RSpec.feature 'User removes his answer', '
   In order to delete an answer
   as a user
   I want to remove one of my answers
-' do
+', js: true do
   given!(:question) { create(:question_with_answers) }
   given!(:user) { create(:user) }
   given!(:answer) { create(:answer, user: user, question: question) }
@@ -16,11 +16,13 @@ RSpec.feature 'User removes his answer', '
 
     visit question_path(question)
 
-    within('.answer:nth-of-type(1)') do
-      expect(page).not_to have_link 'Delete'
+    (2..4).each do |i|
+      within(".answers>div:nth-child(#{i})") do
+        expect(page).not_to have_link 'Delete'
+      end
     end
 
-    within('.answer:nth-of-type(4)') do
+    within('.answers>div:nth-child(5)') do
       click_on 'Delete'
     end
 

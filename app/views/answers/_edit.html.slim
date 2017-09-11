@@ -1,8 +1,0 @@
-= form_for [@question, answer], remote: true do |f|
-  .new-answer-errors
-    = render "shared/errors", object: answer
-  = f.label :body, 'Edit your answer:'
-  br
-  = f.text_area :body
-  br
-  = submit_tag 'Ok'

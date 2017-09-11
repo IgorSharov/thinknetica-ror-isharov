@@ -9,10 +9,18 @@ li {
   margin-left: 20px;
 }
 
-.new_answer>label {
+.new_answer label,.edit_answer label {
   font-weight: bold;
 }
 
 .edit_question {
+  display: none;
+}
+
+.best-answer {
+  background-color: lightcyan;
+}
+
+.answer-edit-form-tmp {
   display: none;
 }

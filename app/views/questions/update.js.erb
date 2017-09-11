@@ -2,7 +2,7 @@
   $(".alert").html("<%= j flash.now[:alert] %>");
   $(".notice").empty();
 
-  $('.new-question-errors').html("<%= j render 'shared/errors', object: @question %>");
+  $('.edit_question-errors').html("<%= j render 'shared/errors', object: @question %>");
 <% else %>
   $(".alert").empty();
   $(".notice").html("<%= j flash.now[:notice] %>");

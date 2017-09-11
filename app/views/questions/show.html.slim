@@ -4,7 +4,7 @@
   - if current_user&.author_of? @question
     = form_for @question, remote: true do |f|
       h3 Edit your question:
-      .new-question-errors
+      .edit_question-errors
       = f.label :title
       = f.text_field :title
       br
@@ -13,15 +13,26 @@
       br
       = submit_tag 'Ok'
     .question-actions-bar
-      = link_to 'Edit', '#', remote: true
+      = link_to 'Edit', '#', class: 'question-edit_link'
       '  |
       = link_to 'Delete', question_path(@question), method: :delete
 
 .answers
+  .best-answer
+    - if @best_answer
+     .answer*{'data-answer-id': @best_answer.id}
+        h3 #BestAnswer
+        - if current_user&.author_of? @question
+          = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true 
+        p = @best_answer.body
+        - if current_user&.author_of? @best_answer
+          = link_to 'Edit', edit_question_answer_path(@question, @best_answer), class: 'answer_edit'
+          '  |
+          = link_to 'Delete', question_answer_path(@question, @best_answer), class: 'answer_delete', method: :delete, remote: true
   = render @question.answers
 
 = form_for [@question, @answer], remote: true do |new_answer|
-  .new-answer-errors
+  .new_answer-errors
     = render "shared/errors", object: @answer
   = new_answer.label :body, 'Your answer:'
   br
@@ -31,3 +42,12 @@
 
 br
 = link_to 'back', root_path
+
+.answer-edit-form-tmp
+  = form_for [@question, @answer], method: :patch, remote: true do |a|
+    .edit_answer-errors.errors
+    = a.label :body, 'Edit your answer:'
+    br
+    = a.text_area :body
+    br
+    = submit_tag 'Ok'

@@ -1,5 +1,0 @@
-$(".alert").empty();
-$(".notice").empty();
-
-var answer = $('.answer[data-answer-id="<%= @answer.id %>"]');
-answer.find('p').after("<%= j render 'answers/edit', answer: @answer %>");
