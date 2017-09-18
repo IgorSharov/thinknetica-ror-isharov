@@ -19,6 +19,8 @@ RSpec.feature 'User answers a question', '
 
     click_on 'Add answer'
 
+    wait_for_ajax
+
     expect(page).to have_content 'Answer successfully created.'
     expect(page).to have_content answer_text
   end
