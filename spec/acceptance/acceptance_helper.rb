@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+Capybara.default_max_wait_time = 10
+
 RSpec.configure do |config|
   config.include AcceptanceHelper, type: :feature
   config.include WaitForAjax, type: :feature
