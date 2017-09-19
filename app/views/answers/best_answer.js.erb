@@ -1,4 +1,4 @@
-<% if @new_best_answer.errors.present? %>
+<% if @new_best_answer&.errors.present? %>
   $(".alert").html("<%= j flash.now[:alert] %>");
   $(".notice").empty();
 <% else %>
