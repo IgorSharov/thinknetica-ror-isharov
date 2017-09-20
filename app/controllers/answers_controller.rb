@@ -35,10 +35,11 @@ class AnswersController < ApplicationController
 
   def best_answer
     return unless current_user.author_of? @question
-    @question.best_answer&.update(best_answer: false)
-    flash[:notice] = 'Answer successfully updated.'
-    return unless params[:bool] == 'true'
-    flash[:alert] = 'An error occurred while updating the answer!' unless (@question.best_answer = params[:id])
+    if (@question.best_answer = { new_best_answer: @question.answers.find(params[:id]), set_new: params[:bool] })
+      flash[:notice] = 'Answer successfully updated.'
+    else
+      flash[:alert] = 'An error occurred while updating the answer!'
+    end
   end
 
   private

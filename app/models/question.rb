@@ -12,7 +12,8 @@ class Question < ApplicationRecord
     answers.find_by(best_answer: true)
   end
 
-  def best_answer=(id)
-    answers.find(id).update(best_answer: true)
+  def best_answer=(params_hash)
+    best_answer&.update(best_answer: false)
+    params_hash[:new_best_answer].update(best_answer: true) if params_hash[:set_new] == 'true'
   end
 end
