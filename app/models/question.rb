@@ -13,7 +13,9 @@ class Question < ApplicationRecord
   end
 
   def best_answer=(params_hash)
-    best_answer&.update(best_answer: false)
-    params_hash[:new_best_answer].update(best_answer: true) if params_hash[:set_new] == 'true'
+    transaction do
+      best_answer&.update!(best_answer: false)
+      params_hash[:new_best_answer].update!(best_answer: true) if params_hash[:set_new] == 'true'
+    end
   end
 end
