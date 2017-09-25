@@ -24,7 +24,8 @@ gem 'rails', '~> 5.1.2'
 # then add this line
 # > gem 'bcrypt', platforms: :ruby
 # to Gemfile, that is it :D.
-gem 'bcrypt', platforms: :ruby
+gem 'bcrypt'
+gem 'carrierwave'
 gem 'devise'
 gem 'pg'
 
