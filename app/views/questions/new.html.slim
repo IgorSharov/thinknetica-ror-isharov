@@ -1,18 +1,16 @@
- = form_for @question, url: { action: 'create' } do |f|
+= simple_form_for @question, url: { action: 'create' } do |f|
   h1 Ask your question:
-  = render "shared/errors", object: @question
-  = f.label :title
-  = f.text_field :title
+  = render 'shared/errors', object: @question
+  = f.input :title
+  = f.input :body
   br
-  = f.label :body
-  = f.text_area :body
+  h3 Attachments:
+  = f.simple_fields_for :attachments do |a|
+    = render 'shared/attachment_fields', f: a
+  .attachment-add
+    = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
   br
-  p Attachments:
-  p
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
-  = submit_tag 'Ask'
+  = f.submit 'Ask'
 
 br
 = link_to 'back', root_path

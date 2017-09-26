@@ -23,3 +23,6 @@
 /yarn-error.log
 
 .byebug_history
+
+# Ignore attached files.
+/public/uploads/

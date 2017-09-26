@@ -4,12 +4,12 @@ class Question < ApplicationRecord
   belongs_to :user
 
   has_many :answers, dependent: :destroy
-  has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :attachments, as: :attachable, dependent: :destroy, inverse_of: :attachable
 
   validates :title, :body, presence: true
   validates :title, uniqueness: { case_sensitive: false }
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   def best_answer
     answers.find_by(best_answer: true)
