@@ -26,6 +26,7 @@ gem 'rails', '~> 5.1.2'
 # to Gemfile, that is it :D.
 gem 'bcrypt'
 gem 'carrierwave'
+gem 'cocoon'
 gem 'devise'
 gem 'pg'
 
