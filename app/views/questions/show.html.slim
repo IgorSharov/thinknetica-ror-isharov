@@ -1,20 +1,29 @@
 .question
   h1 = @question.title
   p = @question.body
+  h3 Attached files:
   - if @question.attachments.any?
-    h3 Attached files:
-    ul
+    ul.attachments
       - @question.attachments.each do |a|
-       li = link_to a.file.filename, a.file.url
+       li.attachment
+        = link_to a.file.filename, a.file.url
+        - if current_user&.author_of? @question
+          '  |
+          = link_to 'remove', attachment_path(a), class: 'attachment_delete', method: :delete, remote: true
+  - else
+    span none
   - if current_user&.author_of? @question
-    = form_for @question, remote: true do |f|
+    = simple_form_for @question, remote: true do |f|
       h3 Edit your question:
       .edit_question-errors
-      = f.label :title
-      = f.text_field :title
+      = f.input :title
+      = f.input :body
       br
-      = f.label :body
-      = f.text_area :body
+      h3 Attachments:
+      = f.simple_fields_for :attachments do |a|
+        = render 'shared/attachment_fields', f: a
+      .attachment-add
+        = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
       br
       = submit_tag 'Ok'
     .question-actions-bar
