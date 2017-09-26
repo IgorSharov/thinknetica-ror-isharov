@@ -18,8 +18,7 @@
       .edit_question-errors
       = f.input :title
       = f.input :body
-      br
-      h3 Attachments:
+      h4 Attachments:
       = f.simple_fields_for :attachments do |a|
         = render 'shared/attachment_fields', f: a
       .attachment-add
