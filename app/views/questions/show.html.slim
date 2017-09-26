@@ -5,7 +5,7 @@
     h3 Attached files:
     ul
       - @question.attachments.each do |a|
-       li = link_to a.file.file.filename, a.file.url
+       li = link_to a.file.filename, a.file.url
   - if current_user&.author_of? @question
     = form_for @question, remote: true do |f|
       h3 Edit your question:
