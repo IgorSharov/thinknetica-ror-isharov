@@ -5,10 +5,11 @@
   = f.input :body
   br
   h3 Attachments:
-  = f.simple_fields_for :attachments do |a|
-    = render 'shared/attachment_fields', f: a
-  .attachment-add
-    = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
+  .attachments
+    = f.simple_fields_for :attachments do |a|
+      = render 'shared/attachment_fields', f: a
+    .attachment-add
+      = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
   br
   = f.submit 'Ask'
 

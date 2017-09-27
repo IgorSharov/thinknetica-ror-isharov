@@ -11,9 +11,10 @@
       = f.input :title
       = f.input :body
       h4 Attachments:
-      = f.simple_fields_for :attachments do |a|
-      .attachment-add
-        = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
+      .new-attachments
+        = f.simple_fields_for :attachments do |a|
+        .new-attachment-add
+          = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
       br
       = submit_tag 'Ok'
     .question-actions-bar

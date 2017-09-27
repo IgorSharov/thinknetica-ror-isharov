@@ -8,46 +8,46 @@ RSpec.feature 'User adds files to a question', '
   I want to attach files to a question
 ' do
   given(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given(:question) { create(:question, user: user) }
 
   background do
     sign_in user
   end
 
-  scenario 'Authenticated user attaches files to a new question' do
+  scenario 'Authenticated user attaches file to a new question' do
     visit new_question_path
 
     fill_in 'Title', with: 'Test title'
     fill_in 'Body', with: 'Test body'
 
-    click_on 'Add file'
-    attach_file 'File', file_fixture('test_file.txt')
-
-    click_on 'Add file'
-    attach_file 'File', file_fixture('test_file_2.txt')
+    attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
 
     click_on 'Ask'
 
     click_on 'Show'
 
-    expect(page).to have_content 'test_file.txt'
-    expect(page).to have_content 'test_file_2.txt'
+    expect(page).to have_link 'test_file.txt'
   end
 
-  scenario 'Author of a question adds files to it' do
+  scenario 'Author of a question adds files to it', js: true do
+    question
     visit question_path(question)
 
     click_on 'Edit'
 
     click_on 'Add file'
-    attach_file 'File', file_fixture('test_file.txt')
+    attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
 
     click_on 'Add file'
-    attach_file 'File', file_fixture('test_file_2.txt')
+    within('.new-attachments>div:nth-child(2)') do
+      attach_file 'File', Rails.root.join(file_fixture('test_file_2.txt'))
+    end
 
     click_on 'Ok'
 
-    expect(page).to have_content 'test_file.txt'
-    expect(page).to have_content 'test_file_2.txt'
+    wait_for_ajax
+
+    expect(page).to have_link 'test_file.txt'
+    expect(page).to have_link 'test_file_2.txt'
   end
 end
