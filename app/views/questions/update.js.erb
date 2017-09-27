@@ -12,4 +12,7 @@
 
   $('.question>h1').html('<%= @question.title %>')
   $('.question>p').html('<%= @question.body %>')
+
+  $('.question>.attachments').html("<%= j render 'shared/attachments', object: @question %>")
+  $('.question>.simple_form.edit_question>.nested-fields').remove()
 <% end %>

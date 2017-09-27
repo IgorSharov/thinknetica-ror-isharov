@@ -2,16 +2,8 @@
   h1 = @question.title
   p = @question.body
   h3 Attached files:
-  - if @question.attachments.any?
-    ul.attachments
-      - @question.attachments.each do |a|
-       li.attachment
-        = link_to a.file.filename, a.file.url
-        - if current_user&.author_of? @question
-          '  |
-          = link_to 'remove', attachment_path(a), class: 'attachment_delete', method: :delete, remote: true
-  - else
-    span none
+  ul.attachments
+    = render "shared/attachments", object: @question
   - if current_user&.author_of? @question
     = simple_form_for @question, remote: true do |f|
       h3 Edit your question:
@@ -20,7 +12,6 @@
       = f.input :body
       h4 Attachments:
       = f.simple_fields_for :attachments do |a|
-        = render 'shared/attachment_fields', f: a
       .attachment-add
         = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
       br

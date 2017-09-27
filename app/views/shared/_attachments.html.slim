@@ -1,0 +1,9 @@
+- if object.attachments.any?
+  - object.attachments.each do |a|
+    li.attachment
+      = link_to a.file.filename, a.file.url
+      - if current_user&.author_of? @question
+        '  |
+        = link_to 'remove', attachment_path(a), class: 'attachment_delete', method: :delete, remote: true
+- else
+  span none
