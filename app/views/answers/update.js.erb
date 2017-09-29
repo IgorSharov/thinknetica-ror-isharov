@@ -11,5 +11,6 @@ var answer = $('.answer[data-answer-id="<%= @answer.id %>"]');
   answer.find('.edit_answer-errors').empty();
 
   answer.find('p').text('<%= @answer.body %>');
+  answer.find('.attachments').html('<%= j render "shared/attachments", object: @answer %>');
   answer.find('form').remove();
 <% end %>

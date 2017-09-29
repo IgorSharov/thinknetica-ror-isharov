@@ -4,6 +4,9 @@
     - if current_user&.author_of? @question
       = link_to 'Mark', best_answer_question_answer_path(@question, answer, bool: true), class: 'answer_mark-as-best', method: :patch, remote: true 
     p = answer.body
+    h4 Attached files:
+    ul.attachments
+      = render "shared/attachments", object: answer
     - if current_user&.author_of? answer
       = link_to 'Edit', '#', class: 'answer_edit'
       '  |

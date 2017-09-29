@@ -8,5 +8,5 @@
   $(".notice").html("<%= j flash.now[:notice] %>");
 
   $('.answers').append('<%= j render @answer %>');
-  $('#new_answer>#answer_body').val('');
+  $('#new_answer textarea#answer_body').val('');
 <% end %>

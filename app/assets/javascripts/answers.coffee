@@ -32,7 +32,7 @@ onLoadAnswers = ->
     answer_id = $(this).parent().data('answerId')
     edit_form_template.prop('action', (i,a) -> a + '/' + answer_id)
     edit_form_template.find('textarea#answer_body').val($(this).parent().find('p').text())
-    $(this).parent().find('p').after(edit_form_template)
+    $(this).before(edit_form_template)
 
   $('.answers').on 'click', '.answer>a.answer_delete', (e) ->
     e.preventDefault()

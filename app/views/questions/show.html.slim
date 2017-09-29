@@ -30,29 +30,36 @@
         - if current_user&.author_of? @question
           = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true 
         p = @best_answer.body
+        h4 Attached files:
+        ul.attachments
+          = render "shared/attachments", object: @best_answer
         - if current_user&.author_of? @best_answer
           = link_to 'Edit', edit_question_answer_path(@question, @best_answer), class: 'answer_edit'
           '  |
           = link_to 'Delete', question_answer_path(@question, @best_answer), class: 'answer_delete', method: :delete, remote: true
   = render @question.answers
 
-= form_for [@question, @answer], remote: true do |new_answer|
+= simple_form_for [@question, @answer], remote: true do |new_answer|
   .new_answer-errors
     = render "shared/errors", object: @answer
-  = new_answer.label :body, 'Your answer:'
-  br
-  = new_answer.text_area :body
-  br
+  = new_answer.input :body, label: 'Your answer:'
+  h4 Attachments:
+  .attachments
+    = new_answer.simple_fields_for :attachments do |a|
+    .attachment-add
+      = link_to_add_association 'Add file', new_answer, :attachments, partial: 'shared/attachment_fields'
   = submit_tag 'Add answer'
 
 br
 = link_to 'back', root_path
 
 .answer-edit-form-tmp
-  = form_for [@question, @answer], method: :patch, remote: true do |a|
+  = simple_form_for [@question, @answer], method: :patch, remote: true do |ans|
     .edit_answer-errors.errors
-    = a.label :body, 'Edit your answer:'
-    br
-    = a.text_area :body
-    br
+    = ans.input :body, label: 'Edit your answer:'
+    h4 Attachments:
+    .new-attachments
+      = ans.simple_fields_for :attachments do |attachment|
+      .new-attachment-add
+        = link_to_add_association 'Add file', ans, :attachments, partial: 'shared/attachment_fields'
     = submit_tag 'Ok'

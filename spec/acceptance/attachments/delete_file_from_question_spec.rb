@@ -16,7 +16,7 @@ RSpec.feature 'User deletes file from a question', '
 
     visit question_path(question)
 
-    within('.attachments') do
+    within('.question>.attachments') do
       click_on 'remove'
     end
 

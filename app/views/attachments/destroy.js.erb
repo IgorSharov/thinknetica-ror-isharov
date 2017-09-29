@@ -6,6 +6,8 @@
   $(".notice").html("<%= j flash.now[:notice] %>");
 <% end %>
 
-if ($('.question>.attachments>.attachment').size() == 0) {
-  $('.question>.attachments').html('<span>none</span>')
-}
+$('.attachments').each(function() {
+  if ($(this).find('.attachment').size() == 0) {
+    $(this).html('<span>none</span>')
+  }
+})
