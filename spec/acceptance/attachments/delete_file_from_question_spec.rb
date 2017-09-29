@@ -6,22 +6,22 @@ RSpec.feature 'User deletes file from a question', '
   In order to edit files attached to the question
   as its author
   I want to delete a file attached to the question
-' do
+', js: true do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given(:file) { create(:file, question: question) }
+  given!(:attachment) { create(:attachment, attachable: question) }
 
   scenario 'Authenticated user deletes file from a question' do
     sign_in user
 
     visit question_path(question)
 
-    within('.attachment') do
-      click_on 'Delete'
+    within('.attachments') do
+      click_on 'remove'
     end
 
-    expect(page).to have_content 'File successfully deleted.'
-    expect(page).not_to have_content file.name
+    expect(page).to have_content 'Attachment successfully deleted.'
+    expect(page).not_to have_content attachment.file.filename
   end
 
   scenario 'User can\'t delete file from another\'s question' do
@@ -30,7 +30,7 @@ RSpec.feature 'User deletes file from a question', '
     visit question_path(question)
 
     within('.attachment') do
-      expect(page).not_to have_link 'Delete'
+      expect(page).not_to have_content 'remove'
     end
   end
 end

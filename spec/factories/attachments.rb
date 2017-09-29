@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :attachment do
-    file 'MyString'
+    file { File.new(Rails.root.join('spec', 'fixtures', 'files', 'test_file.txt')) }
   end
 end
