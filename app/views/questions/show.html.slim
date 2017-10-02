@@ -1,9 +1,10 @@
 .question
   h1 = @question.title
+  = render 'shared/rating', object: @question
   p = @question.body
   h3 Attached files:
   ul.attachments
-    = render "shared/attachments", object: @question
+    = render 'shared/attachments', object: @question
   - if current_user&.author_of? @question
     = simple_form_for @question, remote: true do |f|
       h3 Edit your question:
@@ -25,10 +26,10 @@
 .answers
   .best-answer
     - if @best_answer
-     .answer*{'data-answer-id': @best_answer.id}
+      .answer*{'data-answer-id': @best_answer.id}
         h3 #BestAnswer
         - if current_user&.author_of? @question
-          = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true 
+          = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true
         p = @best_answer.body
         h4 Attached files:
         ul.attachments
