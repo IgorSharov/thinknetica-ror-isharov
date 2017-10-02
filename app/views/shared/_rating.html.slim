@@ -1,6 +1,6 @@
 .rating
-  = link_to '+', '#' unless current_user.author_of? object
+  = link_to '+', '#' unless current_user&.author_of? object
   |  
   = object.rating
   |  
-  = link_to '-', '#' unless current_user.author_of? object
+  = link_to '-', '#' unless current_user&.author_of? object

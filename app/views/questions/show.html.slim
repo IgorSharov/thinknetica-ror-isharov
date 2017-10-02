@@ -25,20 +25,8 @@
 
 .answers
   .best-answer
-    - if @best_answer
-      .answer*{'data-answer-id': @best_answer.id}
-        h3 #BestAnswer
-        - if current_user&.author_of? @question
-          = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true
-        p = @best_answer.body
-        h4 Attached files:
-        ul.attachments
-          = render "shared/attachments", object: @best_answer
-        - if current_user&.author_of? @best_answer
-          = link_to 'Edit', edit_question_answer_path(@question, @best_answer), class: 'answer_edit'
-          '  |
-          = link_to 'Delete', question_answer_path(@question, @best_answer), class: 'answer_delete', method: :delete, remote: true
-  = render @question.answers
+    = render @best_answer, best: true if @best_answer
+  = render @question.answers, best: false
 
 = simple_form_for [@question, @answer], remote: true do |new_answer|
   .new_answer-errors

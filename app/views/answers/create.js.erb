@@ -7,6 +7,6 @@
   $('.new_answer-errors').empty();
   $(".notice").html("<%= j flash.now[:notice] %>");
 
-  $('.answers').append('<%= j render @answer %>');
+  $('.answers').append('<%= j render @answer, best: false %>');
   $('#new_answer textarea#answer_body').val('');
 <% end %>

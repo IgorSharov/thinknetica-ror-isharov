@@ -1,8 +1,11 @@
 - if answer.persisted?
-  .answer*{'data-answer-id': answer.id} style=('display: none' if answer.best_answer?)
-    h3 #Answer
+  .answer*{'data-answer-id': answer.id} style=('display: none' if !best && answer.best_answer?)
+    h3 = best ? '#BestAnswer' : '#Answer'
     - if current_user&.author_of? @question
-      = link_to 'Mark', best_answer_question_answer_path(@question, answer, bool: true), class: 'answer_mark-as-best', method: :patch, remote: true 
+      - if best
+        = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true
+      - else
+        = link_to 'Mark', best_answer_question_answer_path(@question, answer, bool: true), class: 'answer_mark-as-best', method: :patch, remote: true
     p = answer.body
     h4 Attached files:
     ul.attachments
