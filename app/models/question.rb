@@ -2,6 +2,7 @@
 
 class Question < ApplicationRecord
   include HasAttachments
+  include Votable
 
   belongs_to :user
 
