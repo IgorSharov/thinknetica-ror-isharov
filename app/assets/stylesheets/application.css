@@ -20,10 +20,15 @@
     box-sizing: border-box;
 }
 
-.alert,.errors {
+.alert,
+.errors {
     color: red;
 }
 
 .notice {
     color: green;
+}
+
+.rating * {
+    display: inline-block;
 }

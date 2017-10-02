@@ -1,6 +1,5 @@
 .rating
-  = link_to '+', '#' unless current_user&.author_of? object
-  |  
-  = object.rating
-  |  
-  = link_to '-', '#' unless current_user&.author_of? object
+  h4 Rating:
+  = button_to '+', '#' unless current_user&.author_of? object
+  span = object.rating
+  = button_to '-', '#' unless current_user&.author_of? object

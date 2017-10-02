@@ -6,6 +6,7 @@
         = link_to 'Unmark', best_answer_question_answer_path(@question, @best_answer, bool: false), class: 'answer_unmark-best', method: :patch, remote: true
       - else
         = link_to 'Mark', best_answer_question_answer_path(@question, answer, bool: true), class: 'answer_mark-as-best', method: :patch, remote: true
+    = render 'shared/rating', object: answer
     p = answer.body
     h4 Attached files:
     ul.attachments

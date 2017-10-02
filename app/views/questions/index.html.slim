@@ -12,5 +12,9 @@ h1 Questions
       - if q.answers.any?
         '  |
         span = "#{pluralize(q.answers.count, 'answer')}"
+      '  |
+      span
+        'Rating:
+        = q.rating
 
 = button_to 'Ask question', new_question_path, method: :get
