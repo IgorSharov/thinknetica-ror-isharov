@@ -30,7 +30,6 @@
 
 = simple_form_for [@question, @answer], remote: true do |new_answer|
   .new_answer-errors
-    = render "shared/errors", object: @answer
   = new_answer.input :body, label: 'Your answer:'
   h4 Attachments:
   .attachments

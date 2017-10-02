@@ -55,6 +55,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'factory_girl_rails'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'rubocop'
@@ -80,6 +81,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Extra gems which were added manually
 # gem 'factory_girl_rails'
 # gem 'pry-rails'
+# gem 'pry-byebug'
 # gem 'rspec-rails'
 # gem 'rubocop'
 # gem 'shoulda-matchers'

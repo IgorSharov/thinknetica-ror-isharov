@@ -11,5 +11,7 @@ Rails.application.routes.draw do
 
   resources :attachments, only: :destroy
 
+  post '/votes/:votable_type/:votable_id/:value', to: 'votes#create', as: :vote
+
   root to: 'questions#index'
 end

@@ -63,7 +63,8 @@ ActiveRecord::Schema.define(version: 20171002083435) do
     t.string 'votable_type'
     t.integer 'votable_id'
     t.integer 'user_id'
-    t.integer 'value'
+    t.integer 'value', null: false
+    t.integer 'vote_type', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['user_id'], name: 'index_votes_on_user_id'

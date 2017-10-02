@@ -1,0 +1,25 @@
+// Place all the styles related to the votes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.rating {
+    * {
+        display: inline-block;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    span {
+        margin: auto 3px;
+    }
+
+    .chosen_link {
+        border: solid black 1px;
+    }
+
+    .disabled_link {
+        pointer-events: none;
+        cursor: default;
+    }
+}

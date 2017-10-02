@@ -28,7 +28,3 @@
 .notice {
     color: green;
 }
-
-.rating * {
-    display: inline-block;
-}
