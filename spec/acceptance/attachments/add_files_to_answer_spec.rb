@@ -25,9 +25,8 @@ RSpec.feature 'User adds files to an answer', '
       attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
 
       click_on 'Add answer'
+      wait_for_ajax
     end
-
-    wait_for_ajax
 
     expect(page).to have_link 'test_file.txt'
   end
@@ -47,7 +46,6 @@ RSpec.feature 'User adds files to an answer', '
       end
 
       click_on 'Ok'
-
       wait_for_ajax
 
       expect(page).to have_link 'test_file.txt'
