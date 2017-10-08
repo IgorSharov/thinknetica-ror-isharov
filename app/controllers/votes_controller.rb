@@ -10,12 +10,14 @@ class VotesController < ApplicationController
       render json: { error: 'Self voting denied' }, status: :forbidden
       return
     end
-    if !previous_vote_by_user.nil? && previous_vote_by_user.vote_type != @vote.vote_type
+    factor = previous_vote_by_user.nil? ? 1 : -1
+    @vote.value = params[:value].to_i * factor
+    if !previous_vote_by_user.nil? &&
+       (previous_vote_by_user.vote_type != @vote.vote_type ||
+        previous_vote_by_user.value == @vote.value)
       render json: { error: 'Incorrect vote type' }, status: :unprocessable_entity
       return
     end
-    factor = previous_vote_by_user.nil? ? 1 : -1
-    @vote.value = params[:value].to_i * factor
     if @vote.save
       render json: { rating: @vote.votable.rating }
     else

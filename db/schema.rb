@@ -13,12 +13,15 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20171002083435) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension 'plpgsql'
+
   create_table 'answers', force: :cascade do |t|
-    t.integer 'question_id', null: false
+    t.bigint 'question_id', null: false
     t.text 'body', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.integer 'user_id', null: false
+    t.bigint 'user_id', null: false
     t.boolean 'best_answer'
     t.index ['question_id'], name: 'index_answers_on_question_id'
     t.index ['user_id'], name: 'index_answers_on_user_id'
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20171002083435) do
   create_table 'attachments', force: :cascade do |t|
     t.string 'file'
     t.string 'attachable_type'
-    t.integer 'attachable_id'
+    t.bigint 'attachable_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[attachable_type attachable_id], name: 'index_attachments_on_attachable_type_and_attachable_id'
@@ -38,7 +41,7 @@ ActiveRecord::Schema.define(version: 20171002083435) do
     t.text 'body', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.integer 'user_id', null: false
+    t.bigint 'user_id', null: false
     t.index ['user_id'], name: 'index_questions_on_user_id'
   end
 
@@ -61,8 +64,8 @@ ActiveRecord::Schema.define(version: 20171002083435) do
 
   create_table 'votes', force: :cascade do |t|
     t.string 'votable_type'
-    t.integer 'votable_id'
-    t.integer 'user_id'
+    t.bigint 'votable_id'
+    t.bigint 'user_id'
     t.integer 'value', null: false
     t.integer 'vote_type', null: false
     t.datetime 'created_at', null: false
@@ -70,4 +73,9 @@ ActiveRecord::Schema.define(version: 20171002083435) do
     t.index ['user_id'], name: 'index_votes_on_user_id'
     t.index %w[votable_type votable_id], name: 'index_votes_on_votable_type_and_votable_id'
   end
+
+  add_foreign_key 'answers', 'questions'
+  add_foreign_key 'answers', 'users'
+  add_foreign_key 'questions', 'users'
+  add_foreign_key 'votes', 'users'
 end
