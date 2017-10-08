@@ -1,7 +1,7 @@
 .rating
   h4 Rating:
   - if user_signed_in? && !current_user.author_of?(object)
-    - rating_by_user = object.rating_by_user(current_user.id)
+    - rating_by_user = current_user.rating_of object
     = link_to '+', vote_path(object.class, object.id, 1, vote_type: :up), method: :post, remote: true, data: { type: :json }, class: [:up, rating_by_user == 0 ? nil : rating_by_user > 0 ? 'chosen_link' : 'disabled_link']
     span = object.rating
     = link_to '-', vote_path(object.class, object.id, -1, vote_type: :down), method: :post, remote: true, data: { type: :json }, class: [:down, rating_by_user == 0 ? nil : rating_by_user < 0 ? 'chosen_link' : 'disabled_link']

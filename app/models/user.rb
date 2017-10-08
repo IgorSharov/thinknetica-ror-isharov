@@ -13,4 +13,13 @@ class User < ApplicationRecord
   def author_of?(object)
     object.user_id == id
   end
+
+  def rating_of(votable)
+    votes.where(votable_type: votable.class.name, votable_id: votable.id).sum(:value)
+  end
+
+  def previous_vote_for(votable)
+    user_votes = votes.where(votable_type: votable.class.name, votable_id: votable.id)
+    user_votes.last if user_votes.size.odd?
+  end
 end

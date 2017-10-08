@@ -24,4 +24,18 @@ RSpec.describe User do
       expect(user).not_to be_author_of another_question
     end
   end
+
+  describe 'rating methods' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    let!(:vote) { create(:vote, votable: question, user: user) }
+
+    it 'gets user\'s rating of the object' do
+      expect(user.rating_of(question)).to eq 1
+    end
+
+    it 'gets user\'s previous vote for the object' do
+      expect(user.previous_vote_for(question)).to eq vote
+    end
+  end
 end
