@@ -11,7 +11,7 @@ RSpec.feature 'User votes for/against a question or an answer', '
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario 'Authenticated user only once (re-)votes for something' do
+  scenario 'Authenticated user votes for something only once' do
     sign_in create(:user)
 
     visit question_path(question)
