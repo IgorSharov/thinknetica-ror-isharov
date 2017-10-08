@@ -6,6 +6,10 @@ class VotesController < ApplicationController
 
   def create
     previous_vote_by_user = @vote.votable.previous_vote_by_user(current_user.id)
+    if current_user.author_of? @vote.votable
+      render json: { error: 'Self voting denied' }, status: :forbidden
+      return
+    end
     if !previous_vote_by_user.nil? && previous_vote_by_user.vote_type != @vote.vote_type
       render json: { error: 'Incorrect vote type' }, status: :unprocessable_entity
       return
