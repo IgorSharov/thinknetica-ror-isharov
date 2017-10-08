@@ -5,6 +5,12 @@ FactoryGirl.define do
     body
     question
     user
+
+    factory :answer_with_votes do
+      after(:create) do |answer|
+        create_list(:vote, 3, votable: answer)
+      end
+    end
   end
 
   factory :invalid_answer, class: 'Answer' do
