@@ -7,9 +7,9 @@ Rails.application.routes.draw do
     resources :votes, only: :create
   end
 
-  resources :questions, concerns: :votable do
-    resources :answers, concerns: :votable do
-      patch 'best_answer', on: :member
+  resources :questions, concerns: :votable, shallow: true do
+    resources :answers, concerns: :votable, only: %i[create update destroy] do
+      patch 'best', on: :member
     end
   end
 

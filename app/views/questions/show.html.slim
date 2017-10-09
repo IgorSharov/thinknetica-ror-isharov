@@ -42,7 +42,7 @@ br
 = link_to 'back', root_path
 
 .answer-edit-form-tmp
-  = simple_form_for [@question, @answer], method: :patch, remote: true do |ans|
+  = simple_form_for @answer, url: answer_path(:temp), method: :patch, remote: true do |ans|
     .edit_answer-errors.errors
     = ans.input :body, label: 'Edit your answer:'
     h4 Attachments:

@@ -49,12 +49,12 @@ RSpec.describe AnswersController, type: :controller do
       let!(:answer) { create(:answer, question: question, user: @user) }
 
       it 'removes user\'s answer' do
-        expect { delete :destroy, xhr: true, params: { question_id: question, id: answer } }.to \
+        expect { delete :destroy, xhr: true, params: { id: answer } }.to \
           change(question.answers, :count).by(-1)
       end
 
       it 'redirects to the question' do
-        delete :destroy, xhr: true, params: { question_id: question, id: answer }
+        delete :destroy, xhr: true, params: { id: answer }
 
         expect(response).to render_template :destroy
       end
@@ -64,7 +64,7 @@ RSpec.describe AnswersController, type: :controller do
       let!(:answer) { create(:answer, question: question, user: create(:user)) }
 
       it 'doesn\'t remove user\'s answer' do
-        expect { delete :destroy, xhr: true, params: { question_id: question, id: answer } }.not_to \
+        expect { delete :destroy, xhr: true, params: { id: answer } }.not_to \
           change(question.answers, :count)
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'with valid attributes' do
         it 'assigns answer\'s user and question' do
-          patch :update, params: { question_id: question, id: answer, answer: new_answer_attrs, format: :js }
+          patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
 
           expect(assigns(:answer).user).to eq @user
           expect(assigns(:answer).question).to eq question
@@ -93,7 +93,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'renders answer update' do
-          patch :update, params: { question_id: question, id: answer, answer: new_answer_attrs, format: :js }
+          patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
 
           expect(response).to render_template :update
         end
@@ -107,7 +107,7 @@ RSpec.describe AnswersController, type: :controller do
           initial_question = answer.question
           initial_user = answer.user
 
-          patch :update, params: { question_id: question, id: answer, answer: invalid_answer_attrs, format: :js }
+          patch :update, params: { id: answer, answer: invalid_answer_attrs, format: :js }
 
           answer.reload
 
@@ -117,7 +117,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'renders answer update' do
-          patch :update, params: { question_id: question, id: answer, answer: invalid_answer_attrs, format: :js }
+          patch :update, params: { id: answer, answer: invalid_answer_attrs, format: :js }
 
           expect(response).to render_template :update
         end
@@ -132,7 +132,7 @@ RSpec.describe AnswersController, type: :controller do
         initial_question = answer.question
         initial_user = answer.user
 
-        patch :update, params: { question_id: question, id: answer, answer: new_answer_attrs, format: :js }
+        patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
 
         answer.reload
 
@@ -142,31 +142,25 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'renders answer update' do
-        patch :update, params: { question_id: question, id: answer, answer: new_answer_attrs, format: :js }
+        patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
 
         expect(response).to render_template :update
       end
     end
   end
 
-  describe 'PATCH #best_answer' do
+  describe 'PATCH #best' do
     let(:question_of_the_user) { create(:question_with_answers, user: @user) }
     let!(:answer) { create(:answer, question: question_of_the_user, user: @user) }
-
-    it 'assigns question' do
-      patch :best_answer, xhr: true, params: { question_id: question_of_the_user, id: answer, bool: true, format: :js }
-
-      expect(assigns(:question)).to eq question_of_the_user
-    end
 
     context 'done by author of the question' do
       it 'marks/unmarks the answer' do
         expect do
-          patch :best_answer, xhr: true, params: { question_id: question_of_the_user, id: answer, bool: true, format: :js }
+          patch :best, xhr: true, params: { id: answer, bool: true, format: :js }
         end.to change(question_of_the_user.answers.where(best_answer: true), :count).by(1)
 
         expect do
-          patch :best_answer, xhr: true, params: { question_id: question_of_the_user, id: answer, bool: false, format: :js }
+          patch :best, xhr: true, params: { id: answer, bool: false, format: :js }
         end.to change(question_of_the_user.answers.where(best_answer: true), :count).by(-1)
       end
 
@@ -174,36 +168,36 @@ RSpec.describe AnswersController, type: :controller do
         new_answer = create(:answer, question: question_of_the_user)
 
         expect do
-          patch :best_answer, xhr: true, params: { question_id: question_of_the_user, id: answer, bool: true, format: :js }
+          patch :best, xhr: true, params: { id: answer, bool: true, format: :js }
         end.to change(question_of_the_user.answers.where(best_answer: true), :count).by(1)
 
         expect do
-          patch :best_answer, xhr: true, params: { question_id: question_of_the_user, id: new_answer, bool: true, format: :js }
+          patch :best, xhr: true, params: { id: new_answer, bool: true, format: :js }
         end.to change(question_of_the_user.answers.where(best_answer: true), :count).by(0)
       end
 
       it 'renders answer edit' do
-        patch :best_answer, xhr: true, params: { question_id: question, id: answer, bool: true, format: :js }
+        patch :best, xhr: true, params: { id: answer, bool: true, format: :js }
 
-        expect(response).to render_template :best_answer
+        expect(response).to render_template :best
       end
     end
 
     context 'done by another user' do
       it 'marks/unmarks the answer' do
         expect do
-          patch :best_answer, xhr: true, params: { question_id: question, id: answer, bool: true, format: :js }
+          patch :best, xhr: true, params: { id: answer, bool: true, format: :js }
         end.to change(question.answers.where(best_answer: true), :count).by(0)
 
         expect do
-          patch :best_answer, xhr: true, params: { question_id: question, id: answer, bool: false, format: :js }
+          patch :best, xhr: true, params: { id: answer, bool: false, format: :js }
         end.to change(question.answers.where(best_answer: true), :count).by(0)
       end
 
       it 'renders answer edit' do
-        patch :best_answer, xhr: true, params: { question_id: question, id: answer, bool: true, format: :js }
+        patch :best, xhr: true, params: { id: answer, bool: true, format: :js }
 
-        expect(response).to render_template :best_answer
+        expect(response).to render_template :best
       end
     end
   end
