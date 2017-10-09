@@ -12,24 +12,24 @@ RSpec.describe VotesController, type: :controller do
     context 'with valid attributes' do
       it 'votes for Question' do
         votable = question
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(-1)
+        expect { post :create, params: { question_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
+        expect { post :create, params: { question_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(-1)
       end
 
       it 'votes for Answer' do
         votable = answer
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(-1)
+        expect { post :create, params: { answer_id: votable.id, value: -1, vote_type: :down, format: :json } }.to change(votable, :rating).by(-1)
+        expect { post :create, params: { answer_id: votable.id, value: -1, vote_type: :down, format: :json } }.to change(votable, :rating).by(1)
       end
 
       it 'renders json' do
         votable = question
-        post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json }
+        post :create, params: { question_id: votable.id, value: 1, vote_type: :up, format: :json }
+        expect(response).to have_http_status(:success)
         expect(response.body).to eq Hash[rating: votable.rating].to_json
 
         votable = answer
-        post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json }
-
+        post :create, params: { answer_id: votable.id, value: 1, vote_type: :up, format: :json }
         expect(response).to have_http_status(:success)
         expect(response.body).to eq Hash[rating: votable.rating].to_json
       end
@@ -38,25 +38,25 @@ RSpec.describe VotesController, type: :controller do
     context 'with invalid attributes' do
       let(:own_question) { create(:question, user: @user) }
 
-      it 'double votes for Question' do
+      it 'cannot double vote for Question' do
         votable = question
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: -1, vote_type: :up, format: :json } }.to change(votable, :rating).by(0)
+        expect { post :create, params: { question_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
+        expect { post :create, params: { question_id: votable.id, value: -1, vote_type: :up, format: :json } }.not_to change(votable, :rating)
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'votes for own Question' do
+      it 'cannot vote for own Question' do
         votable = own_question
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(0)
+        expect { post :create, params: { question_id: votable.id, value: 1, vote_type: :up, format: :json } }.not_to change(votable, :rating)
 
-        expect(response).to have_http_status(:forbidden)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'doesn\'t reset votes for Question' do
+      it 'cannot revote without reseting votes for Question' do
         votable = question
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
-        expect { post :create, params: { votable_type: votable.class, votable_id: votable.id, value: -1, vote_type: :down, format: :json } }.to change(votable, :rating).by(0)
+        expect { post :create, params: { question_id: votable.id, value: 1, vote_type: :up, format: :json } }.to change(votable, :rating).by(1)
+        expect { post :create, params: { question_id: votable.id, value: -1, vote_type: :down, format: :json } }.not_to change(votable, :rating)
 
         expect(response).to have_http_status(:unprocessable_entity)
       end

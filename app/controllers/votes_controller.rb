@@ -2,37 +2,22 @@
 
 class VotesController < ApplicationController
   before_action :authenticate_user!
-  before_action :init_record
+  before_action :load_votable
 
   def create
-    previous_vote_by_user = @vote.votable.previous_vote_by_user(current_user.id)
-    if current_user.author_of? @vote.votable
-      render json: { error: 'Self voting denied' }, status: :forbidden
-      return
-    end
-    factor = previous_vote_by_user.nil? ? 1 : -1
-    @vote.value = params[:value].to_i * factor
-    if !previous_vote_by_user.nil? &&
-       (previous_vote_by_user.vote_type != @vote.vote_type ||
-        previous_vote_by_user.value == @vote.value)
-      render json: { error: 'Incorrect vote type' }, status: :unprocessable_entity
-      return
-    end
-    if @vote.save
-      render json: { rating: @vote.votable.rating }
+    new_vote = @votable.vote(params, current_user)
+    if new_vote.errors.any?
+      render json: new_vote.errors, status: :unprocessable_entity
     else
-      render json: @vote.errors, status: :unprocessable_entity
+      new_vote.save
+      render json: { rating: @votable.rating }
     end
   end
 
   private
 
-  def init_record
-    @vote = Vote.new do |v|
-      v.votable_type = params[:votable_type]
-      v.votable_id = params[:votable_id]
-      v.user = current_user
-      v.vote_type = params[:vote_type]
-    end
+  def load_votable
+    klass = [Question, Answer].detect { |c| params["#{c.name.underscore}_id"] }
+    @votable = klass.find(params["#{klass.name.underscore}_id"])
   end
 end
