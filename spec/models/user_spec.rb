@@ -28,14 +28,18 @@ RSpec.describe User do
   describe 'rating methods' do
     let(:user) { create(:user) }
     let(:question) { create(:question) }
-    let!(:vote) { create(:vote, votable: question, user: user) }
+    let(:answer) { create(:answer) }
+    let!(:vote_for_question) { create(:vote, votable: question, user: user) }
+    let!(:vote_for_answer) { create(:vote, votable: answer, user: user) }
 
     it 'gets user\'s rating of the object' do
       expect(user.rating_of(question)).to eq 1
+      expect(user.rating_of(answer)).to eq 1
     end
 
     it 'gets user\'s previous vote for the object' do
-      expect(user.previous_vote_for(question)).to eq vote
+      expect(user.previous_vote_for(question)).to eq vote_for_question
+      expect(user.previous_vote_for(answer)).to eq vote_for_answer
     end
   end
 end
