@@ -2,19 +2,8 @@ h1 Questions
 - if @questions.count.zero?
   p No data
 - else
-  - @questions.each do |q|
-    .question
-      h3
-        |#
-        = q.title
-      p = q.body
-      = link_to 'Show', question_path(q)
-      - if q.answers.any?
-        '  |
-        span = "#{pluralize(q.answers.count, 'answer')}"
-      '  |
-      span
-        'Rating:
-        = q.rating
+  .questions
+    - @questions.each do |q|
+      = render 'question_for_index', question: q
 
 = button_to 'Ask question', new_question_path, method: :get

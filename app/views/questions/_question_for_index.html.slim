@@ -1,0 +1,13 @@
+.question
+  h3
+    |#
+    = question.title
+  p = question.body
+  = link_to 'Show', question_path(question)
+  - if question.answers.any?
+    '  |
+    span = "#{pluralize(question.answers.count, 'answer')}"
+  '  |
+  span
+    'Rating:
+    = question.rating
