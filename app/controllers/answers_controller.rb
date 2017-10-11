@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: %i[update destroy best]
 
+  after_action :publish_answer, only: :create
+
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
@@ -51,5 +53,10 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: %i[id file _destroy])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+    AnswersChannel.broadcast_to(@question, @answer.to_json(include: :attachments))
   end
 end

@@ -3,6 +3,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: %i[show edit update destroy]
+
   after_action :publish_question, only: :create
 
   def index
@@ -27,6 +28,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    gon.question_id = @question.id
     @answer = Answer.new
     @best_answer = @question.answers.find_by best_answer: true
   end
