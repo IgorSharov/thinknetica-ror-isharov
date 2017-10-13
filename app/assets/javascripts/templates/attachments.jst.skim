@@ -1,0 +1,7 @@
+- if @object.attachments.length != 0
+  - for attachment in @object.attachments
+    li.attachment
+      - url = attachment.file.url
+      a href="#{url}" = url.substring(url.lastIndexOf('/')+1)
+- else
+  span none

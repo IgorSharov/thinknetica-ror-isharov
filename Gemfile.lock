@@ -224,6 +224,11 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
+    skim (0.10.0)
+      coffee-script
+      coffee-script-source (>= 1.2.0)
+      slim (>= 3.0)
+      sprockets (>= 2, < 4)
     slim (3.0.8)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 1.3.3, < 2.1)
@@ -297,6 +302,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_form
+  skim
   slim-rails
   sqlite3
   turbolinks (~> 5)

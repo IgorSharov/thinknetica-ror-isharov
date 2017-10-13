@@ -6,11 +6,11 @@
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= Gon::Base.render_data %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
 <body>
+    <%= Gon::Base.render_data %>
     <span class="author"><%= current_user&.email %></span>
     <% if controller.controller_name != 'sessions' %>
         <% if user_signed_in? %>

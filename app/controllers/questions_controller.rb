@@ -29,6 +29,8 @@ class QuestionsController < ApplicationController
 
   def show
     gon.question_id = @question.id
+    gon.question_user_id = @question.user.id
+    gon.current_user_id = current_user&.id
     @answer = Answer.new
     @best_answer = @question.answers.find_by best_answer: true
   end

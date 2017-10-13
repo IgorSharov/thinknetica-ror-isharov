@@ -1,0 +1,8 @@
+.rating
+  h4 Rating:
+  - if gon.current_user_id && @object.user_id != gon.current_user_id
+    a.up data-type='json' data-remote='true' rel='nofollow' data-method='post' href="/#{@object_type}s/#{@object.id}/votes?value=1&vote_type=up" +
+    span = 0
+    a.down data-type='json' data-remote='true' rel='nofollow' data-method='post' href="/#{@object_type}/#{@object.id}/votes?value=-1&vote_type=down" -
+  - else
+    span = 0

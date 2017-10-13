@@ -1,6 +1,9 @@
-$ ->
+onLoadSubscribeQuestions = ->
   if $('.questions')[0]
-    App.cable.subscriptions.create 'QuestionsChannel',
+    subscription = App.cable.subscriptions.create 'QuestionsChannel',
       received: (data) ->
-        console.log 'Received: new question'
+        console.log data
         $('.questions').append data
+    killAllChannelsExcept(subscription)
+
+$(document).on 'turbolinks:load', onLoadSubscribeQuestions

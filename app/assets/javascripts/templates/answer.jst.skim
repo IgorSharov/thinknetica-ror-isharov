@@ -1,0 +1,9 @@
+.answer data-answer-id="#{@answer.id}"
+  h3 #Answer
+  - if gon.current_user_id == gon.question_user_id
+    a.answer_mark-as-best data-remote='true' rel='nofollow' data-method='patch' href="/answers/#{@answer.id}/best?bool=true" Mark
+  == JST['templates/rating']({object: @answer, object_type: 'answer' })
+  p = @answer.body
+  h4 Attached files:
+  ul.attachments
+    == JST['templates/attachments']({object: @answer })

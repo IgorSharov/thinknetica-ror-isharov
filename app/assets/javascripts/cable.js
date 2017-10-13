@@ -6,8 +6,16 @@
 //= require_tree ./channels
 
 (function() {
-  this.App || (this.App = {});
+    this.App || (this.App = {});
 
-  App.cable = ActionCable.createConsumer();
+    App.cable = ActionCable.createConsumer();
 
 }).call(this);
+
+function killAllChannelsExcept(subscription) {
+    App.cable.subscriptions.subscriptions.forEach(function(element) {
+        if (subscription !== element) {
+            App.cable.subscriptions.forget(element);
+        }
+    });
+}
