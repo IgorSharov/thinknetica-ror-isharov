@@ -1,23 +1,24 @@
-h1 = question.title
-= render 'shared/rating', object: question
-p = question.body
-h3 Attached files:
-ul.attachments
-  = render 'shared/attachments', object: question
-- if current_user&.author_of? question
-  = simple_form_for question, remote: true do |f|
-    h3 Edit your question:
-    .edit_question-errors
-    = f.input :title
-    = f.input :body
-    h4 Attachments:
-    .new-attachments
-      = f.simple_fields_for :attachments do |a|
-      .new-attachment-add
-        = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
-    br
-    = submit_tag 'Ok'
-  .question-actions-bar
-    = link_to 'Edit', '#', class: 'question-edit_link'
-    '  |
-    = link_to 'Delete', question_path(question), method: :delete
+.question
+  h1 = question.title
+  == render 'shared/rating', object: question
+  p = question.body
+  h3 Attached files:
+  == render 'shared/attachments', object: question
+  h3 Comments:
+  == render 'shared/comments', object: question
+  - if current_user&.author_of? question
+    = simple_form_for question, remote: true do |f|
+      h3 Edit your question:
+      .edit_question-errors
+      = f.input :title
+      = f.input :body
+      h4 Attachments:
+      .new-attachments
+        .new-attachment-add
+          = link_to_add_association 'Add file', f, :attachments, partial: 'shared/attachment_fields'
+      br
+      = submit_tag 'Ok'
+    .question-actions-bar
+      = link_to 'Edit', '#', class: 'question-edit_link'
+      '  |
+      = link_to 'Delete', question_path(question), method: :delete

@@ -23,5 +23,7 @@
 $(document).ajaxError(function(e, xhr) {
     if (xhr.status == 401) {
         $('.alert').html(xhr.responseText);
+    } else if (xhr.status == 422) {
+        $('.alert').html(`Error: ${xhr.statusText}`);        
     }
 });

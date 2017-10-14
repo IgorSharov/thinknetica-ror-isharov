@@ -1,5 +1,4 @@
-.question
-  == render @question
+== render @question
 
 .answers
   .best-answer
@@ -24,7 +23,13 @@ br
     = ans.input :body, label: 'Edit your answer:'
     h4 Attachments:
     .new-attachments
-      = ans.simple_fields_for :attachments do |attachment|
       .new-attachment-add
         = link_to_add_association 'Add file', ans, :attachments, partial: 'shared/attachment_fields'
     = submit_tag 'Ok'
+
+.new_comment-form-tmp
+  = simple_form_for @comment, url: question_comments_path(:temp), remote: true do |comment|
+    .new_comment-errors.errors
+    = comment.input :body, label: 'Comment:'
+    = submit_tag 'Ok'
+  

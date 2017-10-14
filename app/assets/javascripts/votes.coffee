@@ -13,7 +13,4 @@ onLoadVotes = ->
         $(this).addClass('chosen_link')
         $(this).parent().find('a').not('.chosen_link').addClass('disabled_link')
 
-    .on "ajax:error", '.rating>a', (e, xhr, status, error) ->
-      $('.alert').html("#{error}: #{xhr.responseJSON.error}");
-
 $(document).on('turbolinks:load', onLoadVotes)

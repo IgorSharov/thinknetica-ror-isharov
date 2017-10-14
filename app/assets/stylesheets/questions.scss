@@ -1,27 +1,14 @@
 // Place all the styles related to the Questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.question,.answer {
-  margin: 15px auto;
+.question {
+    margin: 15px auto;
 }
 
 li {
-  margin-left: 20px;
-}
-
-.new_answer label,.edit_answer label {
-  display: block;
-  font-weight: bold;
+    margin-left: 20px;
 }
 
 .edit_question {
-  display: none;
-}
-
-.best-answer {
-  background-color: lightcyan;
-}
-
-.answer-edit-form-tmp {
-  display: none;
+    display: none;
 }

@@ -33,6 +33,7 @@ class QuestionsController < ApplicationController
     gon.current_user_id = current_user&.id
     @answer = Answer.new
     @best_answer = @question.answers.find_by best_answer: true
+    @comment = Comment.new
   end
 
   def destroy

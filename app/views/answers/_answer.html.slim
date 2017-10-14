@@ -9,8 +9,9 @@
     == render 'shared/rating', object: answer
     p = answer.body
     h4 Attached files:
-    ul.attachments
-      == render "shared/attachments", object: answer
+    == render "shared/attachments", object: answer
+    h4 Comments:
+    == render "shared/comments", object: answer
     - if current_user&.author_of? answer
       = link_to 'Edit', '#', class: 'answer_edit'
       '  |

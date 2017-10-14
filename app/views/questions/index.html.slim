@@ -4,6 +4,6 @@ h1 Questions
   p No data
 - else
     - @questions.each do |q|
-      = render 'question_for_index', question: q
+      == render 'question_for_index', question: q
 
 = button_to 'Ask question', new_question_path, method: :get

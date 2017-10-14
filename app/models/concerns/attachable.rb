@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HasAttachments
+module Attachable
   extend ActiveSupport::Concern
   included do
     has_many :attachments, as: :attachable, dependent: :destroy, inverse_of: :attachable

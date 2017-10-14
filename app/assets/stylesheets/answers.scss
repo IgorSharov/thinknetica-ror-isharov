@@ -1,3 +1,20 @@
 // Place all the styles related to the Answers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.answer {
+    margin: 15px auto;
+}
+
+.new_answer label,
+.edit_answer label {
+    display: block;
+    font-weight: bold;
+}
+
+.best-answer {
+    background-color: lightcyan;
+}
+
+.answer-edit-form-tmp {
+    display: none;
+}
