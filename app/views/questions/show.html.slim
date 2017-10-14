@@ -1,17 +1,16 @@
 .question
-  = render @question
+  == render @question
 
 .answers
   .best-answer
-    = render @best_answer, best: true if @best_answer
-  = render @question.answers, best: false
+    == render @best_answer, best: true if @best_answer
+  == render @question.answers, best: false
 
 = simple_form_for [@question, @answer], remote: true do |new_answer|
   .new_answer-errors
   = new_answer.input :body, label: 'Your answer:'
   h4 Attachments:
   .attachments
-    = new_answer.simple_fields_for :attachments do |a|
     .attachment-add
       = link_to_add_association 'Add file', new_answer, :attachments, partial: 'shared/attachment_fields'
   = submit_tag 'Add answer'

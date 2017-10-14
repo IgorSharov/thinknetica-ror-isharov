@@ -9,4 +9,5 @@
 
   $('.answers').append('<%= j render @answer, best: false %>');
   $('#new_answer textarea#answer_body').val('');
+  $('#new_answer>.attachments>.nested-fields').remove();
 <% end %>
