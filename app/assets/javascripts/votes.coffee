@@ -2,8 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 onLoadVotes = ->
-  $(document)
+  $('body')
     .on 'ajax:success', '.rating>a', (e, data, text, xhr) ->
+      console.log 'vote'
       $('.alert').empty()
       $(this).parent().find('span').text(data.rating)
       if $(this).hasClass('chosen_link')

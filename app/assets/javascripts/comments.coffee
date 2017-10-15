@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 onLoadComments = ->
-  $(document)
+  $('body')
     .on 'click', '.comments>a.comments_add-new', (e)->
       e.preventDefault()
       new_form_template = $('.new_comment-form-tmp>form').clone()
