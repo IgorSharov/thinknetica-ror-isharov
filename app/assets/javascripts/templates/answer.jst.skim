@@ -5,5 +5,9 @@
   == JST['templates/rating']({object: @answer, object_type: 'answer' })
   p = @answer.body
   h4 Attached files:
-  ul.attachments
-    == JST['templates/attachments']({object: @answer })
+  == JST['templates/attachments']({object: @answer })
+  h4 Comments:
+  .comments
+    ul
+    - if gon.current_user_id
+      a.comments_add-new href='#' Add comment

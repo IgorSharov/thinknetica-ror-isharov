@@ -3,4 +3,4 @@
     - if object.comments.any?
       - object.comments.each do |comment|
         li = comment.body
-  = link_to 'Add comment', '#', class: 'comments_add-new'
+  = link_to 'Add comment', '#', class: 'comments_add-new' unless current_user.nil?

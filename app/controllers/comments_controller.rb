@@ -21,13 +21,14 @@ class CommentsController < ApplicationController
   def load_commentable
     klass = [Question, Answer].detect { |c| params["#{c.name.underscore}_id"] }
     @commentable = klass.find(params["#{klass.name.underscore}_id"])
+    @question = klass == Question ? @commentable : @commentable.question
   end
 
   def comment_params
     params.require(:comment).permit(:body)
   end
 
-  def publish_answer
+  def publish_comment
     return if @new_comment.errors.any?
     QuestionChannel.broadcast_to(@question, @new_comment.to_json)
   end
