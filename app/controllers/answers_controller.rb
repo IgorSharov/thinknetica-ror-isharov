@@ -57,6 +57,6 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
-    AnswersChannel.broadcast_to(@question, @answer.to_json(include: :attachments))
+    QuestionChannel.broadcast_to(@question, @answer.to_json(include: :attachments))
   end
 end
