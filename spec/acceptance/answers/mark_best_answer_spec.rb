@@ -19,6 +19,7 @@ RSpec.feature 'Author of a question marks an answer as the best one', '
 
     within('.answers>div:nth-child(2)') do
       click_on 'Mark'
+      wait_for_ajax
     end
 
     within('.best-answer') do
@@ -27,6 +28,7 @@ RSpec.feature 'Author of a question marks an answer as the best one', '
 
     within('.answers>div:nth-child(4)') do
       click_on 'Mark'
+      wait_for_ajax
     end
 
     within('.best-answer') do
@@ -34,6 +36,7 @@ RSpec.feature 'Author of a question marks an answer as the best one', '
       expect(page).to have_content question.answers[2].body
 
       click_on 'Unmark'
+      wait_for_ajax
 
       expect(page).not_to have_content question.answers[2].body
     end
