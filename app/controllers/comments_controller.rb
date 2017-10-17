@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
     @new_comment = @commentable.comments.build(user: current_user)
     @new_comment.body = comment_params[:body]
     if @new_comment.save
-      render json: @new_comment.to_json(only: :body)
+      render json: @new_comment.as_json(only: :body)
     else
       render json: @new_comment.errors, status: :unprocessable_entity
     end
@@ -30,6 +30,6 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @new_comment.errors.any?
-    QuestionChannel.broadcast_to(@question, @new_comment.to_json)
+    QuestionChannel.broadcast_to(@question, @new_comment.as_json)
   end
 end
