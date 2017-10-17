@@ -1,8 +1,8 @@
 h1 Questions
 .questions
-- if @questions.count.zero?
-  p No data
-- else
+  - if @questions.count.zero?
+    p No data
+  - else
     - @questions.each do |q|
       == render 'question_for_index', question: q
 

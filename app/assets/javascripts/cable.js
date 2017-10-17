@@ -12,9 +12,12 @@
 
 }).call(this);
 
-function killAllChannelsExcept(subscription) {
+function cleanUpSubscriptionsFor(subscription) {
+    let subscriptionIdentifier = JSON.parse(subscription.identifier);
     App.cable.subscriptions.subscriptions.forEach(function(element) {
-        if (subscription !== element) {
+        let elementIdentifier = JSON.parse(element.identifier);
+        if (subscription !== element &&
+            elementIdentifier['question_id'] != subscriptionIdentifier['question_id']) {
             App.cable.subscriptions.forget(element);
         }
     });

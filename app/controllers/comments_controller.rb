@@ -30,6 +30,6 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @new_comment.errors.any?
-    QuestionChannel.broadcast_to(@question, @new_comment.as_json)
+    CommentsChannel.broadcast_to(@question, @new_comment.as_json)
   end
 end
