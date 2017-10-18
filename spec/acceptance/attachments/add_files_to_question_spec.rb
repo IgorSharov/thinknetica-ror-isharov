@@ -6,7 +6,7 @@ RSpec.feature 'User adds files to a question', '
   In order to clarify a question
   as a user
   I want to attach files to a question
-' do
+', js: true do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
 
@@ -20,6 +20,7 @@ RSpec.feature 'User adds files to a question', '
     fill_in 'Title', with: 'Test title'
     fill_in 'Body', with: 'Test body'
 
+    click_on 'Add file'
     attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
 
     click_on 'Ask'
@@ -29,7 +30,7 @@ RSpec.feature 'User adds files to a question', '
     expect(page).to have_link 'test_file.txt'
   end
 
-  scenario 'Author of a question adds files to it', js: true do
+  scenario 'Author of a question adds files to it' do
     question
     visit question_path(question)
 

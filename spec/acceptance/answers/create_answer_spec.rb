@@ -47,24 +47,20 @@ RSpec.feature 'User answers a question', '
     scenario 'question appears on another user\'s page' do
       answer_text = 'Test answer body'
 
-      Capybara.using_session('user') do
-        sign_in create(:user)
-        visit question_path(question)
-      end
+      sign_in create(:user)
+      visit question_path(question)
 
       Capybara.using_session('guest') do
         visit question_path(question)
       end
 
-      Capybara.using_session('user') do
-        fill_in 'Your answer:', with: answer_text
+      fill_in 'Your answer:', with: answer_text
 
-        click_on 'Add answer'
-        wait_for_ajax
+      click_on 'Add answer'
+      wait_for_ajax
 
-        expect(page).to have_content 'Answer successfully created.'
-        expect(page).to have_content answer_text
-      end
+      expect(page).to have_content 'Answer successfully created.'
+      expect(page).to have_content answer_text
 
       Capybara.using_session('guest') do
         expect(page).to have_content answer_text

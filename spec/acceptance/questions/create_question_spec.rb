@@ -24,7 +24,7 @@ RSpec.feature 'User creates a question', '
     fill_in 'Body', with: body_text
     click_on 'Ask'
 
-    expect(page).to have_content 'Question successfully created.'
+    expect(page).to have_content 'Question was successfully created.'
     expect(page).to have_content title_text
     expect(page).to have_content body_text
     expect(page).to have_current_path root_path
@@ -42,7 +42,7 @@ RSpec.feature 'User creates a question', '
 
     click_on 'Ask'
 
-    expect(page).to have_content 'An error occurred while creating the question!'
+    expect(page).to have_content 'Question could not be created.'
     expect(page).to have_content 'titlecan\'t be blank'
     expect(page).to have_content 'bodycan\'t be blank'
   end
@@ -61,30 +61,26 @@ RSpec.feature 'User creates a question', '
       title_text = 'Test title'
       body_text = 'Test body'
 
-      Capybara.using_session('user') do
-        sign_in create(:user)
-        visit questions_path
-      end
+      sign_in create(:user)
+      visit questions_path
 
       Capybara.using_session('guest') do
         visit questions_path
       end
 
-      Capybara.using_session('user') do
-        click_on 'Ask question'
+      click_on 'Ask question'
 
-        expect(page).to have_content 'Ask your question'
-        expect(page).to have_current_path new_question_path
+      expect(page).to have_content 'Ask your question'
+      expect(page).to have_current_path new_question_path
 
-        fill_in 'Title', with: title_text
-        fill_in 'Body', with: body_text
-        click_on 'Ask'
+      fill_in 'Title', with: title_text
+      fill_in 'Body', with: body_text
+      click_on 'Ask'
 
-        expect(page).to have_content 'Question successfully created.'
-        expect(page).to have_content title_text
-        expect(page).to have_content body_text
-        expect(page).to have_current_path root_path
-      end
+      expect(page).to have_content 'Question was successfully created.'
+      expect(page).to have_content title_text
+      expect(page).to have_content body_text
+      expect(page).to have_current_path root_path
 
       Capybara.using_session('guest') do
         expect(page).to have_content title_text

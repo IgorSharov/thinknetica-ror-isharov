@@ -44,33 +44,29 @@ RSpec.feature 'User comments a question or an answer', '
 
   context 'multiple sessions', js: true do
     scenario 'comments appear on another user\'s page' do
-      Capybara.using_session('user') do
-        sign_in create(:user)
-        visit question_path(question)
-      end
+      sign_in create(:user)
+      visit question_path(question)
 
       Capybara.using_session('guest') do
         visit question_path(question)
       end
 
-      Capybara.using_session('user') do
-        within('.question') do
-          click_on 'Add comment'
-          fill_in 'Comment:', with: question_comment_text
-          click_on 'Ok'
-          wait_for_ajax
+      within('.question') do
+        click_on 'Add comment'
+        fill_in 'Comment:', with: question_comment_text
+        click_on 'Ok'
+        wait_for_ajax
 
-          expect(page).to have_content question_comment_text
-        end
+        expect(page).to have_content question_comment_text
+      end
 
-        within('.answer') do
-          click_on 'Add comment'
-          fill_in 'Comment:', with: answer_comment_text
-          click_on 'Ok'
-          wait_for_ajax
+      within('.answer') do
+        click_on 'Add comment'
+        fill_in 'Comment:', with: answer_comment_text
+        click_on 'Ok'
+        wait_for_ajax
 
-          expect(page).to have_content answer_comment_text
-        end
+        expect(page).to have_content answer_comment_text
       end
 
       Capybara.using_session('guest') do

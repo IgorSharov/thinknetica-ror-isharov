@@ -28,7 +28,7 @@ RSpec.feature 'User edits his question', '
       expect(page).to have_content edited_body
     end
 
-    expect(page).to have_content 'Question successfully updated.'
+    expect(page).to have_content 'Question was successfully updated.'
   end
 
   scenario 'User can\'t edit another\'s question' do

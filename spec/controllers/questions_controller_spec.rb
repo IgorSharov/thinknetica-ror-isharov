@@ -26,10 +26,6 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'builds one question\'s attachment' do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
-
     it 'renders view for New item' do
       expect(response).to render_template :new
     end
@@ -113,12 +109,6 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'doesn\'t remove the question' do
         expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
-      end
-
-      it 'redirects to root' do
-        delete :destroy, params: { id: question }
-
-        expect(response).to redirect_to root_path
       end
     end
   end

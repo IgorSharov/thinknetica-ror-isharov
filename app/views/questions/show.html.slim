@@ -2,6 +2,7 @@
 
 .answers
   .best-answer
+    - @best_answer = @question.answers.find_by best_answer: true
     == render @best_answer, best: true if @best_answer
   == render @question.answers, best: false
 
