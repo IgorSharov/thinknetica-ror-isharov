@@ -6,9 +6,11 @@ class CommentsController < ApplicationController
 
   after_action :publish_comment, only: :create
 
+  respond_to :json
+
   def create
-    @new_comment = @commentable.comments.build(user: current_user)
-    @new_comment.body = comment_params[:body]
+    @new_comment = @commentable.comments.build(comment_params)
+    @new_comment.user = current_user
     if @new_comment.save
       render json: @new_comment.as_json(only: :body)
     else
