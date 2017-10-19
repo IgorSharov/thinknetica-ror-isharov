@@ -6,11 +6,10 @@ class VotesController < ApplicationController
 
   def create
     new_vote = @votable.vote(params, current_user)
-    if new_vote.errors.any?
-      render json: new_vote.errors, status: :unprocessable_entity
-    else
-      new_vote.save
+    if new_vote.save
       render json: { rating: @votable.rating }
+    else
+      render json: new_vote.errors, status: :unprocessable_entity
     end
   end
 
