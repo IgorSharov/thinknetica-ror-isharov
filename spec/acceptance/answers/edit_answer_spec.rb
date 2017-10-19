@@ -26,7 +26,7 @@ RSpec.feature 'User edits his answer', '
       expect(page).to have_content edited_body
     end
 
-    expect(page).to have_content 'Answer successfully updated.'
+    expect(page).to have_content 'Answer was successfully updated.'
     expect(page).not_to have_content answer.body
     expect(page).not_to have_selector '.answer>textarea'
   end

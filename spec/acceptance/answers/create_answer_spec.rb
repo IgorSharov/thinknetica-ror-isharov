@@ -20,7 +20,7 @@ RSpec.feature 'User answers a question', '
     click_on 'Add answer'
     wait_for_ajax
 
-    expect(page).to have_content 'Answer successfully created.'
+    expect(page).to have_content 'Answer was successfully created.'
     expect(page).to have_content answer_text
   end
 
@@ -31,7 +31,7 @@ RSpec.feature 'User answers a question', '
 
     click_on 'Add answer'
 
-    expect(page).to have_content 'An error occurred while creating the answer!'
+    expect(page).to have_content 'Answer could not be created.'
     expect(page).to have_content 'body can\'t be blank'
   end
 
@@ -59,7 +59,7 @@ RSpec.feature 'User answers a question', '
       click_on 'Add answer'
       wait_for_ajax
 
-      expect(page).to have_content 'Answer successfully created.'
+      expect(page).to have_content 'Answer was successfully created.'
       expect(page).to have_content answer_text
 
       Capybara.using_session('guest') do

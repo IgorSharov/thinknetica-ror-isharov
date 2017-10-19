@@ -11,18 +11,18 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer_attrs) { attributes_for(:answer) }
 
       it 'assigns answer\'s user' do
-        post :create, params: { question_id: question, answer: answer_attrs, format: :js }
+        post :create, xhr: true, params: { question_id: question, answer: answer_attrs, format: :js }
 
         expect(assigns(:answer).user).to eq @user
       end
 
       it 'saves the new answer to db' do
-        expect { post :create, params: { question_id: question, answer: answer_attrs, format: :js } }.to \
+        expect { post :create, xhr: true, params: { question_id: question, answer: answer_attrs, format: :js } }.to \
           change(question.answers, :count).by(1)
       end
 
       it 'renders answer create' do
-        post :create, params: { question_id: question, answer: answer_attrs, format: :js }
+        post :create, xhr: true, params: { question_id: question, answer: answer_attrs, format: :js }
 
         expect(response).to render_template :create
       end
@@ -32,12 +32,12 @@ RSpec.describe AnswersController, type: :controller do
       let(:invalid_answer_attrs) { attributes_for(:invalid_answer) }
 
       it 'doesn\'t save the new question to db' do
-        expect { post :create, params: { question_id: question, answer: invalid_answer_attrs, format: :js } }.not_to \
+        expect { post :create, xhr: true, params: { question_id: question, answer: invalid_answer_attrs, format: :js } }.not_to \
           change(Answer, :count)
       end
 
       it 'renders answer create' do
-        post :create, params: { question_id: question, answer: invalid_answer_attrs, format: :js }
+        post :create, xhr: true, params: { question_id: question, answer: invalid_answer_attrs, format: :js }
 
         expect(response).to render_template :create
       end
@@ -78,14 +78,14 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'with valid attributes' do
         it 'assigns answer\'s user and question' do
-          patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
+          patch :update, xhr: true, params: { id: answer, answer: new_answer_attrs, format: :js }
 
           expect(assigns(:answer).user).to eq @user
           expect(assigns(:answer).question).to eq question
         end
 
         it 'edits answer in db' do
-          patch :update, params: { question_id: question, id: answer, answer: { body: 'new answer body' }, format: :js }
+          patch :update, xhr: true, params: { question_id: question, id: answer, answer: { body: 'new answer body' }, format: :js }
 
           answer.reload
 
@@ -93,7 +93,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'renders answer update' do
-          patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
+          patch :update, xhr: true, params: { id: answer, answer: new_answer_attrs, format: :js }
 
           expect(response).to render_template :update
         end
@@ -107,7 +107,7 @@ RSpec.describe AnswersController, type: :controller do
           initial_question = answer.question
           initial_user = answer.user
 
-          patch :update, params: { id: answer, answer: invalid_answer_attrs, format: :js }
+          patch :update, xhr: true, params: { id: answer, answer: invalid_answer_attrs, format: :js }
 
           answer.reload
 
@@ -117,7 +117,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it 'renders answer update' do
-          patch :update, params: { id: answer, answer: invalid_answer_attrs, format: :js }
+          patch :update, xhr: true, params: { id: answer, answer: invalid_answer_attrs, format: :js }
 
           expect(response).to render_template :update
         end
@@ -132,7 +132,7 @@ RSpec.describe AnswersController, type: :controller do
         initial_question = answer.question
         initial_user = answer.user
 
-        patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
+        patch :update, xhr: true, params: { id: answer, answer: new_answer_attrs, format: :js }
 
         answer.reload
 
@@ -142,7 +142,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'renders answer update' do
-        patch :update, params: { id: answer, answer: new_answer_attrs, format: :js }
+        patch :update, xhr: true, params: { id: answer, answer: new_answer_attrs, format: :js }
 
         expect(response).to render_template :update
       end

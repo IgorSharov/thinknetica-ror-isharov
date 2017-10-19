@@ -26,7 +26,7 @@ RSpec.feature 'User removes his answer', '
       click_on 'Delete'
     end
 
-    expect(page).to have_content 'Answer successfully deleted.'
+    expect(page).to have_content 'Answer was successfully destroyed.'
     expect(page).not_to have_content answer.body
     expect(page).to have_current_path question_path(question)
   end
