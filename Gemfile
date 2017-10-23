@@ -54,6 +54,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
+  gem 'capybara-email'
   gem 'factory_girl_rails'
   gem 'pry-byebug'
   gem 'pry-rails'
@@ -71,6 +72,7 @@ group :test do
 end
 
 group :development do
+  gem 'letter_opener'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
 end
@@ -79,7 +81,9 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Extra gems which were added manually
+# gem 'capybara-email'
 # gem 'factory_girl_rails'
+# gem 'letter_opener'
 # gem 'pry-rails'
 # gem 'pry-byebug'
 # gem 'rspec-rails'

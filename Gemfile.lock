@@ -54,6 +54,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
     carrierwave (1.1.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -107,6 +110,8 @@ GEM
     jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -300,6 +305,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   capybara (~> 2.13)
+  capybara-email
   carrierwave
   cocoon
   coffee-rails (~> 4.2)
@@ -309,6 +315,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   launchy
+  letter_opener
   omniauth
   omniauth-vkontakte
   pg
