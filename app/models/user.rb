@@ -3,8 +3,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:vkontakte]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: [:vkontakte]
 
   has_many :answers, dependent: :destroy
   has_many :questions, dependent: :destroy
@@ -26,16 +26,22 @@ class User < ApplicationRecord
 
   def self.find_or_create_for_auth(auth)
     authorization = AuthAccount.find_by(provider: auth.provider, uid: auth.uid.to_s)
-    return authorization.user unless authorization.nil?
+    return authorization.user if authorization
     email = auth.info[:email]
-    return if email.ni?
-    user = find_by(email: email)
-    return user unless user.nil?
-    password = Devise.friendly_token[0, 20]
-    transaction do
-      user = create!(email: email, password: password, password_confirmation: password)
-      user.auth_accounts.create(provider: auth.provider, uid: auth.uid)
+    return unless email
+    if (user = find_by(email: email))
+      user.create_auth_account(auth)
+    else
+      password = Devise.friendly_token[0, 20]
+      transaction do
+        user = create!(email: email, password: password, password_confirmation: password)
+        user.create_auth_account(auth)
+      end
     end
     user
+  end
+
+  def create_auth_account(auth)
+    auth_accounts.create(provider: auth.provider, uid: auth.uid)
   end
 end
