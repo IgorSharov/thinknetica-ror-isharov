@@ -3,6 +3,8 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :log_in, except: :failure
 
+  def github; end
+
   def vkontakte; end
 
   def failure
