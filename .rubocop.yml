@@ -33,3 +33,7 @@ Rails/FilePath:
   Exclude:
     - 'config/environments/development.rb'
     - 'spec/rails_helper.rb'
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'db/migrate/**/'
