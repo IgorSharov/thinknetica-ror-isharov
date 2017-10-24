@@ -15,6 +15,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def log_in
     @user = User.find_or_create_for_auth(request.env['omniauth.auth'])
+    render('shared/oauth_email') && return unless @user
     return unless @user.persisted?
     sign_in_and_redirect @user, event: :authentication
     set_flash_message(:notice, :success, kind: action_name) if is_navigational_format?
