@@ -13,10 +13,10 @@ RSpec.feature 'Unregistered user signs up', '
     email = 'new_user@test.com'
 
     fill_in 'Email', with: email
-    fill_in 'Password', with: '12345678'
-    fill_in 'Password confirmation', with: '12345678'
+    fill_in '* Password', with: '12345678'
+    fill_in '* Password confirmation', with: '12345678'
     click_button 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
   end
 end

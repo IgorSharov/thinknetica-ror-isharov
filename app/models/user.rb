@@ -28,18 +28,29 @@ class User < ApplicationRecord
   def self.find_or_create_for_auth(auth)
     authorization = AuthAccount.find_by(provider: auth.provider, uid: auth.uid.to_s)
     return authorization.user if authorization
+    return unless auth.info
     email = auth.info[:email]
     return unless email
     if (user = find_by(email: email))
       user.create_auth_account(auth)
     else
       password = Devise.friendly_token[0, 20]
+      user = new(email: email, password: password, password_confirmation: password)
+      user.skip_confirmation!
       transaction do
-        user = create!(email: email, password: password, password_confirmation: password)
+        user.save!
         user.create_auth_account(auth)
       end
     end
     user
+  end
+
+  def self.find_and_send_confirmation_email(auth)
+    user = find_or_create_for_auth(auth)
+    return unless user
+    user.confirmed_at = nil
+    user.save
+    user.send_confirmation_instructions
   end
 
   def create_auth_account(auth)

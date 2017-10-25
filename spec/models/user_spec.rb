@@ -44,10 +44,9 @@ RSpec.describe User do
     end
   end
 
-  describe '.find_or_create_for_auth' do
-    let!(:user) { create(:user) }
-
-    context 'auth provides email' do
+  context 'auth provides email' do
+    describe '.find_or_create_for_auth' do
+      let!(:user) { create(:user) }
       let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: user.email }) }
 
       context 'user already has auth account' do
@@ -79,11 +78,6 @@ RSpec.describe User do
           end
         end
 
-        # TODO: repair
-        # Failure/Error: <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
-        # ActionView::Template::Error:
-        # Missing host to link to! Please provide the :host parameter, set default_url_options[:host], or set :only_path to true
-        #   ./app/views/devise/mailer/confirmation_instructions.html.erb:5:in `_app_views_devise_mailer_confirmation_instructions_html_erb___204209578_45532836'
         context 'user doesn\'t exist' do
           let(:auth_for_new_user) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: 'user@example.lo' }) }
 
@@ -102,7 +96,7 @@ RSpec.describe User do
 
           it 'creates auth_account for user' do
             user = User.find_or_create_for_auth(auth_for_new_user)
-            expect(user.authorizations).to_not be_empty
+            expect(user.auth_accounts).to_not be_empty
           end
 
           it 'creates auth_account with provider and uid' do
@@ -114,8 +108,22 @@ RSpec.describe User do
         end
       end
     end
+  end
 
-    # TODO: develop
-    context 'auth doesn\'t provide email'
+  context 'auth doesn\'t provide email' do
+    let!(:user) { create(:user) }
+    let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: user.email }) }
+
+    describe '.find_and_send_confirmation_email' do
+      it 'sends a mail' do
+        expect(User.find_and_send_confirmation_email(auth)).to be_a(Mail::Message)
+      end
+
+      it 'disconfirms existing user' do
+        User.find_and_send_confirmation_email(auth)
+        user.reload
+        expect(user.confirmed_at).to eq nil
+      end
+    end
   end
 end

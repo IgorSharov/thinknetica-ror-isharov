@@ -3,6 +3,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
+  devise_scope :user do
+    post 'omniauth_callbacks/email_confirm_for_oauth'
+  end
+
   concern :votable do
     resources :votes, only: :create
   end

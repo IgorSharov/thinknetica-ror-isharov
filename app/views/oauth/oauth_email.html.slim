@@ -1,0 +1,8 @@
+h2 Please enter your email for confirmation
+
+= form_tag controller: 'omniauth_callbacks', action: 'email_confirm_for_oauth', method: :post do
+  = label_tag :email, 'Email:'
+  = text_field_tag :email
+  = hidden_field_tag 'provider', request.env['omniauth.auth'].provider
+  = hidden_field_tag 'uid', request.env['omniauth.auth'].uid.to_s
+  = submit_tag  'Send confirmation'
