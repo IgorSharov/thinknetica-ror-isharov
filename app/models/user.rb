@@ -35,7 +35,7 @@ class User < ApplicationRecord
       user.create_auth_account(auth)
     else
       password = Devise.friendly_token[0, 20]
-      user = new(email: email, password: password, password_confirmation: password)
+      user = User.new(email: email, password: password, password_confirmation: password)
       user.skip_confirmation!
       transaction do
         user.save!
@@ -54,6 +54,6 @@ class User < ApplicationRecord
   end
 
   def create_auth_account(auth)
-    auth_accounts.create(provider: auth.provider, uid: auth.uid)
+    auth_accounts.create!(provider: auth.provider, uid: auth.uid)
   end
 end
