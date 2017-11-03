@@ -13,8 +13,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def email_confirm_for_oauth
     auth = OmniAuth::AuthHash.new(
-      provider: params[:provider],
-      uid: params[:uid],
+      provider: session[:provider],
+      uid: session[:uid],
       info: { email: params[:email] }
     )
     if User.find_and_send_confirmation_email(auth)
@@ -22,6 +22,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       flash[:alert] = 'An error occured.'
     end
+    session[:provider] = nil
+    session[:uid] = nil
     redirect_to root_path
   end
 
@@ -29,7 +31,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def log_in
     @user = User.find_or_create_for_auth(request.env['omniauth.auth'])
-    render('oauth/oauth_email') && return unless @user
+    unless @user
+      session[:provider] = request.env['omniauth.auth'].provider
+      session[:uid] = request.env['omniauth.auth'].uid.to_s
+      render('oauth/oauth_email')
+      return
+    end
     return unless @user.persisted?
     sign_in_and_redirect @user, event: :authentication
     set_flash_message(:notice, :success, kind: action_name) if is_navigational_format?
