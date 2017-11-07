@@ -8,6 +8,8 @@ class CommentsController < ApplicationController
 
   respond_to :json
 
+  authorize_resource
+
   def create
     @new_comment = @commentable.comments.build(comment_params)
     @new_comment.user = current_user

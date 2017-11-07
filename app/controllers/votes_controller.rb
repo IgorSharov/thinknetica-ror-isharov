@@ -4,6 +4,8 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_votable
 
+  authorize_resource
+
   def create
     new_vote = @votable.vote(params, current_user)
     if new_vote.save

@@ -189,7 +189,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'renders answer update' do
         patch :update, params: { id: question, question: new_question_attrs, format: :js }
 
-        expect(response).to render_template :update
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

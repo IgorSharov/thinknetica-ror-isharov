@@ -144,7 +144,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'renders answer update' do
         patch :update, xhr: true, params: { id: answer, answer: new_answer_attrs, format: :js }
 
-        expect(response).to render_template :update
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end
@@ -187,11 +187,11 @@ RSpec.describe AnswersController, type: :controller do
       it 'marks/unmarks the answer' do
         expect do
           patch :best, xhr: true, params: { id: answer, bool: true, format: :js }
-        end.to change(question.answers.where(best_answer: true), :count).by(0)
+        end.not_to change(question.answers.where(best_answer: true), :count)
 
         expect do
           patch :best, xhr: true, params: { id: answer, bool: false, format: :js }
-        end.to change(question.answers.where(best_answer: true), :count).by(0)
+        end.not_to change(question.answers.where(best_answer: true), :count)
       end
 
       it 'renders answer edit' do
