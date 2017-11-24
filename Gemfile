@@ -66,6 +66,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'json_spec'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
@@ -93,6 +94,7 @@ gem 'cancancan'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
+gem 'doorkeeper'
 gem 'gon'
 gem 'jquery-rails'
 gem 'omniauth'
