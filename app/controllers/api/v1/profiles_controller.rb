@@ -12,10 +12,18 @@ module Api
         respond_with current_resource_owner, except: %i[created_at updated_at]
       end
 
+      def all_others
+        respond_with other_users, except: %i[created_at updated_at]
+      end
+
       protected
 
       def current_resource_owner
         @current_resource_owner ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+      end
+
+      def other_users
+        @other_users ||= User.where.not(id: doorkeeper_token.resource_owner_id) if doorkeeper_token
       end
     end
   end
