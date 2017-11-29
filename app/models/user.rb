@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :auth_accounts, dependent: :destroy
 
+  scope :list_others, ->(id) { where('id != ?', id) }
+
   def author_of?(object)
     object.user_id == id
   end

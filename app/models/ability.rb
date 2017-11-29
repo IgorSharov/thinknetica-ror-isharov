@@ -5,6 +5,8 @@ class Ability
 
   def initialize(user)
     can :read, :all
+    # API
+    can %i[me index], :profile
     return unless user
     # create
     can :create, [Question, Answer, Comment, Vote]

@@ -3,8 +3,8 @@
 module Api
   module V1
     class ProfilesController < ApplicationController
-      skip_authorization_check
       before_action :doorkeeper_authorize!
+      authorize_resource class: false
 
       respond_to :json
 
@@ -12,18 +12,14 @@ module Api
         respond_with current_resource_owner, except: %i[created_at updated_at]
       end
 
-      def all_others
-        respond_with other_users, except: %i[created_at updated_at]
+      def index
+        respond_with User.list_others(doorkeeper_token.resource_owner_id), except: %i[created_at updated_at] if doorkeeper_token
       end
 
       protected
 
       def current_resource_owner
         @current_resource_owner ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
-      end
-
-      def other_users
-        @other_users ||= User.where.not(id: doorkeeper_token.resource_owner_id) if doorkeeper_token
       end
     end
   end
