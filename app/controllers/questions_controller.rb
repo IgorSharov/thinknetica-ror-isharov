@@ -2,7 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy]
+  before_action :question, only: %i[show update destroy]
   before_action :build_answer_and_comment, only: :show
   before_action :pass_params_to_js, only: :show
 
@@ -44,7 +44,7 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, attachments_attributes: %i[id file _destroy])
   end
 
-  def load_question
+  def question
     @question ||= Question.find(params[:id])
   end
 

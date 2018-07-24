@@ -2,8 +2,8 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: :create
-  before_action :load_answer, only: %i[update destroy best]
+  before_action :question, only: :create
+  before_action :answer, only: %i[update destroy best]
 
   after_action :publish_answer, only: :create
 
@@ -36,11 +36,11 @@ class AnswersController < ApplicationController
 
   private
 
-  def load_question
+  def question
     @question ||= Question.find(params[:question_id])
   end
 
-  def load_answer
+  def answer
     @answer = Answer.find(params[:id])
   end
 

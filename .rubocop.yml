@@ -21,6 +21,11 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Enabled: false
 
+Style/MixinUsage:
+  Exclude:
+    - 'bin/setup'
+    - 'bin/update'
+
 Style/Documentation:
   Enabled: false
 
