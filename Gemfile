@@ -7,10 +7,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.3.3'
+ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.2'
+gem 'rails', '~> 5.1.6'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -55,7 +55,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'capybara-email'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
@@ -83,7 +83,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Extra gems which were added manually
 # gem 'capybara-email'
-# gem 'factory_girl_rails'
+# gem 'factory_bot_rails'
 # gem 'letter_opener'
 # gem 'pry-rails'
 # gem 'pry-byebug'
@@ -94,7 +94,7 @@ gem 'cancancan'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
-gem 'doorkeeper'
+gem 'doorkeeper', '= 4.2.6'
 gem 'gon'
 gem 'jquery-rails'
 gem 'omniauth'
