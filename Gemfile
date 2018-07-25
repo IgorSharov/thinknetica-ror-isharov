@@ -10,7 +10,7 @@ end
 ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -46,6 +46,8 @@ gem 'jbuilder', '~> 2.5'
 # to Gemfile, that is it :D.
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'bootsnap', '>= 1.1.0', require: false
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -79,7 +81,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+# gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Extra gems which were added manually
 # gem 'capybara-email'
