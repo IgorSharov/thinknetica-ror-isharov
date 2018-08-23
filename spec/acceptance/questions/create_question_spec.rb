@@ -43,8 +43,8 @@ RSpec.feature 'User creates a question', '
     click_on 'Ask'
 
     expect(page).to have_content 'Question could not be created.'
-    expect(page).to have_content 'titlecan\'t be blank'
-    expect(page).to have_content 'bodycan\'t be blank'
+    expect(page).to have_content 'Titlecan\'t be blank'
+    expect(page).to have_content 'Body can\'t be blank'
   end
 
   scenario 'Non-Authenticated user creates a new question' do

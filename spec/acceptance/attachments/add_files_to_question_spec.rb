@@ -21,7 +21,7 @@ RSpec.feature 'User adds files to a question', '
     fill_in 'Body', with: 'Test body'
 
     click_on 'Add file'
-    attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
+    find_field('File').send_keys win_remote_fixture_path 'test_file.txt'
 
     click_on 'Ask'
 
@@ -38,11 +38,11 @@ RSpec.feature 'User adds files to a question', '
       click_on 'Edit'
 
       click_on 'Add file'
-      attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
+      find_field('File').send_keys win_remote_fixture_path 'test_file.txt'
 
       click_on 'Add file'
       within('.new-attachments>div:nth-child(2)') do
-        attach_file 'File', Rails.root.join(file_fixture('test_file_2.txt'))
+        find_field('File').send_keys win_remote_fixture_path 'test_file_2.txt'
       end
 
       click_on 'Ok'

@@ -32,7 +32,7 @@ RSpec.feature 'User answers a question', '
     click_on 'Add answer'
 
     expect(page).to have_content 'Answer could not be created.'
-    expect(page).to have_content 'body can\'t be blank'
+    expect(page.text).to match(/^body\Rcan\'t be blank$/)
   end
 
   scenario 'Non-Authenticated user answers the question' do
@@ -43,7 +43,7 @@ RSpec.feature 'User answers a question', '
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  context 'multiple sessions', js: true do
+  context 'multiple sessions' do
     scenario 'question appears on another user\'s page' do
       answer_text = 'Test answer body'
 

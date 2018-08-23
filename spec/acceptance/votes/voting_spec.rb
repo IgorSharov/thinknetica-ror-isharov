@@ -23,9 +23,7 @@ RSpec.feature 'User votes for/against a question or an answer', '
       click_on '+'
       wait_for_ajax
 
-      click_on '-'
-      wait_for_ajax
-
+      expect(page).to have_css 'a.disabled_link', text: '-'
       expect(page).not_to have_content '0'
       expect(page).to have_content '1'
 
@@ -38,9 +36,7 @@ RSpec.feature 'User votes for/against a question or an answer', '
       click_on '-'
       wait_for_ajax
 
-      click_on '+'
-      wait_for_ajax
-
+      expect(page).to have_css 'a.disabled_link', text: '+'
       expect(page).not_to have_content '0'
       expect(page).to have_content '-1'
 
@@ -58,9 +54,7 @@ RSpec.feature 'User votes for/against a question or an answer', '
       click_on '+'
       wait_for_ajax
 
-      click_on '-'
-      wait_for_ajax
-
+      expect(page).to have_css 'a.disabled_link', text: '-'
       expect(page).not_to have_content '0'
       expect(page).to have_content '1'
 
@@ -73,9 +67,7 @@ RSpec.feature 'User votes for/against a question or an answer', '
       click_on '-'
       wait_for_ajax
 
-      click_on '+'
-      wait_for_ajax
-
+      expect(page).to have_css 'a.disabled_link', text: '+'
       expect(page).not_to have_content '0'
       expect(page).to have_content '-1'
 

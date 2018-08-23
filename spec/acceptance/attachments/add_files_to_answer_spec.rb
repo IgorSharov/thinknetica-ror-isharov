@@ -22,7 +22,8 @@ RSpec.feature 'User adds files to an answer', '
       fill_in 'Your answer:', with: 'Test Body'
 
       click_on 'Add file'
-      attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
+      # attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
+      find_field('File').send_keys win_remote_fixture_path 'test_file.txt'
 
       click_on 'Add answer'
       wait_for_ajax
@@ -38,11 +39,11 @@ RSpec.feature 'User adds files to an answer', '
       click_on 'Edit'
 
       click_on 'Add file'
-      attach_file 'File', Rails.root.join(file_fixture('test_file.txt'))
+      find_field('File').send_keys win_remote_fixture_path 'test_file.txt'
 
       click_on 'Add file'
       within('.new-attachments>div:nth-child(2)') do
-        attach_file 'File', Rails.root.join(file_fixture('test_file_2.txt'))
+        find_field('File').send_keys win_remote_fixture_path 'test_file_2.txt'
       end
 
       click_on 'Ok'

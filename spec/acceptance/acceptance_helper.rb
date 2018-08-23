@@ -16,8 +16,8 @@ Capybara.server = :puma
 Capybara.server_host = '192.168.56.2'
 Capybara.server_port = 3002
 Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
-Capybara.default_max_wait_time = 10
-browser = :firefox # :firefox || :chrome - Selenium < 3.14 with remote Chrome doesn't support multiple file upload
+Capybara.default_max_wait_time = 15
+browser = :firefox # :firefox || :chrome
 Capybara.register_driver :"selenium_remote_#{browser}" do |app|
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,

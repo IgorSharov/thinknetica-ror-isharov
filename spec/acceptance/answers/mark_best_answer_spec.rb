@@ -51,7 +51,8 @@ RSpec.feature 'Author of a question marks an answer as the best one', '
       click_on 'Mark'
     end
 
-    regex = Regexp.new "#{question.answers[2].body}.*#{question.answers[0].body}"
+    # regex = Regexp.new "#{question.answers[2].body}.*#{question.answers[0].body}", Regexp::MULTILINE
+    regex = /#{question.answers[2].body}.*#{question.answers[0].body}/m
     expect(page.text).to match(regex)
   end
 
