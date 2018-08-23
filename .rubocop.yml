@@ -33,6 +33,9 @@ Style/NumericLiterals:
   Exclude:
     - 'db/schema.rb'
 
+Rails/BulkChangeTable:
+  Enabled: false
+
 # Offense count: 2
 Rails/FilePath:
   Exclude:

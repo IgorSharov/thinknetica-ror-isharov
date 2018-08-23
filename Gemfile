@@ -58,7 +58,6 @@ group :development, :test do
   # gem 'capybara', '~> 2.13'
   gem 'capybara', '~> 3.6'
   gem 'capybara-email'
-  gem 'factory_bot_rails'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails'
@@ -69,6 +68,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'factory_bot_rails'
   gem 'json_spec'
   gem 'launchy'
   gem 'rails-controller-testing'
@@ -97,7 +97,7 @@ gem 'cancancan'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
-gem 'doorkeeper', '= 4.2.6'
+gem 'doorkeeper'
 gem 'gon'
 gem 'jquery-rails'
 gem 'omniauth'
