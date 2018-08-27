@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../acceptance_helper.rb'
+require_relative '../acceptance_initializer.rb'
 
 RSpec.feature 'User sees all questions', '
   In order to read all questions

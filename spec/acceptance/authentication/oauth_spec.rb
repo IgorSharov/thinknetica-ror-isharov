@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../acceptance_helper.rb'
+require_relative '../acceptance_initializer.rb'
 
 RSpec.feature 'User sings in with OAuth', '
   In order to sign in

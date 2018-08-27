@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../acceptance_helper.rb'
+require_relative '../acceptance_initializer.rb'
 
 RSpec.feature 'User deletes file from an answer', '
   In order to edit files attached to the answer

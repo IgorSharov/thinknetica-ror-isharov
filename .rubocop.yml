@@ -41,6 +41,7 @@ Rails/FilePath:
   Exclude:
     - 'config/environments/development.rb'
     - 'spec/rails_helper.rb'
+    - 'spec/support/carrierwave.rb'
 
 Rails/SkipsModelValidations:
   Exclude:
