@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.5.0
+  TargetRubyVersion: 2.5.1
 
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: native, lf, crlf
