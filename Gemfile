@@ -99,6 +99,7 @@ gem 'cocoon'
 gem 'devise'
 gem 'doorkeeper'
 gem 'gon'
+gem 'html2slim', require: false
 gem 'jquery-rails'
 gem 'omniauth'
 gem 'omniauth-github'

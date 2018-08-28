@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title
+      | ThinkneticaRorIsharov
+    = csrf_meta_tags
+    = action_cable_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    = Gon::Base.render_data
+    span.author
+      = current_user&.email
+    - if controller.controller_name != 'sessions'
+      - if user_signed_in?
+        = button_to 'Log out', destroy_user_session_path, method: :delete
+      - else
+        = link_to 'Log in', new_user_session_path
+        '  |
+      = link_to 'Apps', oauth_applications_path
+    p.notice
+      = notice
+    p.alert
+      = alert
+    = yield
